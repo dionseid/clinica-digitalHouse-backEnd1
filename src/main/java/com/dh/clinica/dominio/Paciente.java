@@ -2,6 +2,8 @@ package com.dh.clinica.dominio;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -17,8 +19,10 @@ public class Paciente {
     private int dni;
     private Date fechaIngreso;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_domicilio", referencedColumnName = "id")
+    @JoinColumn(name = "domicilio_id"/*, referencedColumnName = "id"*/)
     private Domicilio domicilio;
+    @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
+    private Set<Turno> turnos = new HashSet<>();
 
     public Paciente() {
     }
@@ -31,6 +35,10 @@ public class Paciente {
         this.domicilio = domicilio;
         this.email = email;
     }
+
+    /*public void setId(Long id) {
+        this.id = id;
+    }*/
 
     public Long getId() {
         return id;
@@ -94,6 +102,7 @@ public class Paciente {
                 ", dni=" + dni +
                 ", fechaIngreso=" + fechaIngreso +
                 ", domicilio=" + domicilio +
+                ", turnos=" + turnos +
                 '}';
     }
 }

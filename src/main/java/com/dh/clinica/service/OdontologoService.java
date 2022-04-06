@@ -8,11 +8,19 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OdontologoService {
+    /*@Autowired
+    private OdontologoRepository odontologoRepository;*/
+
+    private final OdontologoRepository odontologoRepository;
+
     @Autowired
-    private OdontologoRepository odontologoRepository;
+    public OdontologoService(OdontologoRepository odontologoRepository) {
+        this.odontologoRepository = odontologoRepository;
+    }
 
     public Odontologo guardar(Odontologo o) {
         return odontologoRepository.save(o);
@@ -22,15 +30,16 @@ public class OdontologoService {
         odontologoRepository.deleteById(id);
     }
 
-    public Odontologo buscar(Long id) {
-        return odontologoRepository.findById(id).get();
+    public Optional<Odontologo>/*Odontologo*/ buscar(Long id) {
+        //return odontologoRepository.findById(id).get();
+        return odontologoRepository.findById(id);
     }
 
-    public List<Odontologo> buscarTodos() {
+    public List<Odontologo> listar() {
         return odontologoRepository.findAll();
     }
 
-    /*public Odontologo actualizar(Odontologo o) {
-        return odontologoRepository.actualizar(o);
-    }*/
+    public Odontologo actualizar(Odontologo o) {
+        return odontologoRepository.save(o); // Considerando esta implementación ¿No debería eliminar el odontólogo desactualizado?
+    }
 }

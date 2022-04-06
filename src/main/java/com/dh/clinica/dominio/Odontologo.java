@@ -77,7 +77,7 @@ public class Odontologo {
 
 
 @Entity
-@Table
+@Table(name = "odontologos")
 public class Odontologo {
     @Id
     @SequenceGenerator(name = "odontologo_sequence", sequenceName = "odontologo_sequence", allocationSize = 1)
@@ -99,9 +99,20 @@ public class Odontologo {
         this.matricula = matricula;
     }
 
+    /*public Odontologo(Long id, String nombre, String apellido, Integer matricula) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.matricula = matricula;
+    }*/
+
     public Long getId() {
         return id;
     }
+
+    /*public void setId(Long id) {
+        this.id = id;
+    }*/
 
     public String getNombre() {
         return nombre;
@@ -125,6 +136,14 @@ public class Odontologo {
 
     public void setMatricula(Integer matricula) {
         this.matricula = matricula;
+    }
+
+    public Set<Turno> getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(Set<Turno> turnos) {
+        this.turnos = turnos;
     }
 
     @Override

@@ -1,11 +1,13 @@
 package com.dh.clinica.dominio;
 
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
-@Table
+@Table(name = "turnos")
 public class Turno {
     @Id
     @SequenceGenerator(name = "turno_sequence", sequenceName = "turno_sequence", allocationSize = 1)
@@ -14,11 +16,11 @@ public class Turno {
 
     private Date fecha;
     private LocalTime hora;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "paciente_id"/*, referencedColumnName = "id"*/)
     private Paciente paciente;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_odontologo", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "odontologo_id"/*, referencedColumnName = "id"*/)
     private Odontologo odontologo;
 
     public Turno() {
@@ -34,6 +36,10 @@ public class Turno {
     public Long getId() {
         return id;
     }
+
+    /*public void setId(Long id) {
+        this.id = id;
+    }*/
 
     public Paciente getPaciente() {
         return paciente;

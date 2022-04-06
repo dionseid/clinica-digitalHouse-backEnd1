@@ -14,27 +14,27 @@ import java.util.List;
 @RestController
 @RequestMapping("/odontologos")
 public class OdontologoController {
-    /*@Autowired
+    @Autowired
     private OdontologoService odontologoService;
 
     @PostMapping()
-    public ResponseEntity<Odontologo> guardar(@RequestBody Odontologo odontologo) {
-        return ResponseEntity.ok(odontologoService.guardar(odontologo));
+    public ResponseEntity<Odontologo> guardar(@RequestBody Odontologo o) {
+        return ResponseEntity.ok(odontologoService.guardar(o));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Odontologo> buscar(@PathVariable Long id) {
-        Odontologo odontologo = odontologoService.buscar(id);
+        Odontologo o = odontologoService.buscar(id).orElse(null);
 
-        return ResponseEntity.ok(odontologo);
+        return ResponseEntity.ok(o); // Me va a devolver status OK aunque la respuesta sea un objeto nulo?
     }
 
     @PutMapping()
-    public ResponseEntity<Odontologo> actualizar(@RequestBody Odontologo odontologo) {
+    public ResponseEntity<Odontologo> actualizar(@RequestBody Odontologo o) {
         ResponseEntity<Odontologo> response = null;
 
-        if (odontologo.getId() != null && odontologoService.buscar(odontologo.getId()) != null)
-            response = ResponseEntity.ok(odontologoService.actualizar(odontologo));
+        if (o.getId() != null && odontologoService.buscar(o.getId())/* != null*/.isPresent())
+            response = ResponseEntity.ok(odontologoService.actualizar(o));
         else
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
@@ -45,7 +45,7 @@ public class OdontologoController {
     public ResponseEntity<String> eliminar(@PathVariable Long id) {
         ResponseEntity<String> response = null;
 
-        if (odontologoService.buscar(id) != null) {
+        if (odontologoService.buscar(id)/* != null*/.isPresent()) {
             odontologoService.eliminar(id);
             response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Eliminado");
         } else {
@@ -56,7 +56,7 @@ public class OdontologoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Odontologo>> buscarTodos(){
-        return ResponseEntity.ok(odontologoService.buscarTodos());
-    }*/
+    public ResponseEntity<List<Odontologo>> listar() {
+        return ResponseEntity.ok(odontologoService.listar());
+    }
 }

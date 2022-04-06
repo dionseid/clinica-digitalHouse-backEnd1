@@ -11,11 +11,19 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DomicilioService {
+    /*@Autowired
+    private DomicilioRepository domicilioRepository;*/
+
+    private final DomicilioRepository domicilioRepository; // Está bien que no podamos cambiar a posteriori la implementación del servicio?
+
     @Autowired
-    private DomicilioRepository domicilioRepository;
+    public DomicilioService(DomicilioRepository domicilioRepository) {
+        this.domicilioRepository = domicilioRepository;
+    }
 
     public Domicilio guardar(Domicilio d) {
         return domicilioRepository.save(d);
@@ -25,11 +33,13 @@ public class DomicilioService {
         domicilioRepository.deleteById(id);
     }
 
-    public Domicilio buscar(Long id) {
-        return domicilioRepository.findById(id).get();
+    public Optional<Domicilio>/*Domicilio*/ buscar(Long id) {
+        //return domicilioRepository.findById(id).get();
+        //return Optional.of(domicilioRepository.getById(id));
+        return domicilioRepository.findById(id);
     }
 
-    public List<Domicilio> buscarTodos() {
+    public List<Domicilio> listar() {
         return domicilioRepository.findAll();
     }
 

@@ -10,44 +10,46 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RunWith(JUnit4.class)
+@RunWith(/*JUnit4*/SpringRunner.class)
 @SpringBootTest
 public class OdontologoServiceTests {
+    //private static OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2());
+    @Autowired
+    private OdontologoService odontologoService;
 
-    /*private static OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2());
-
-    @BeforeClass
-    public static void cargarDataSet() {
-        odontologoService.guardar(new Odontologo("Santiago", "Paz", 3455647));
+    //@BeforeClass
+    public /*static*/ void cargarDataSet() {
+        this.odontologoService.guardar(new Odontologo("Santiago", "Paz", 3455647));
 
 
     }
 
     @Test
     public void guardarOdontologo() {
-        Odontologo odontologo = odontologoService.guardar(new Odontologo("Juan", "Ramirez", 348971960));
-        Assert.assertTrue(odontologo.getId() != null);
-
+        this.cargarDataSet();
+        Odontologo o = odontologoService.guardar(new Odontologo("Juan", "Ramirez", 348971960));
+        Assert.assertTrue(o.getId() != null);
     }
 
     @Test
-    public void eliminarPacienteTest() {
-        odontologoService.eliminar(1);
-        Assert.assertTrue(odontologoService.buscar(1) == null);
+    public void eliminarOdontologoTest() {
+        odontologoService.eliminar(1L);
+        Assert.assertTrue(odontologoService.buscar(1L)/* == null*/.isEmpty());
 
     }
 
     @Test
     public void traerTodos() {
-        List<Odontologo> odontologos = odontologoService.buscarTodos();
+        List<Odontologo> odontologos = odontologoService.listar();
         Assert.assertTrue(!odontologos.isEmpty());
-        Assert.assertTrue(odontologos.size() > 0);
+        Assert.assertTrue(odontologos.size()/* > 0*/ == 1);
         System.out.println(odontologos);
-    }*/
-
+    }
 }

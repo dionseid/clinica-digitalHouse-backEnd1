@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Util { // Métodos de soluciones rápidas, por ejemplo, de conversión de tipos de datos
 
-    public static Timestamp dateToTimestamp(Date date){ // Casos en que vamos a usar: Ingresa un usuarie, agregamos odontologue, se registra un turno
+    public static Timestamp dateToTimestamp(Date date) { // Casos en que vamos a usar: Ingresa un usuarie, agregamos odontologue, se registra un turno
         Timestamp timestamp = new Timestamp(date.getTime());
         return timestamp;
     }

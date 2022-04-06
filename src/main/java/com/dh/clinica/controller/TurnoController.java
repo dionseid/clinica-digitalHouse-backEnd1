@@ -16,16 +16,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/turnos")
 public class TurnoController {
-    /*@Autowired
+    @Autowired
     private TurnoService turnoService;
+    @Autowired
     private PacienteService pacienteService;
+    @Autowired
     private OdontologoService odontologoService;
 
     @PostMapping
-    public ResponseEntity<Turno> registrarTurno(@RequestBody Turno turno) {
+    public ResponseEntity<Turno> guardar(@RequestBody Turno t) {
         ResponseEntity<Turno> response;
-        if (pacienteService.buscar(turno.getPaciente().getId()) != null && odontologoService.buscar(turno.getOdontologo().getId()) != null)
-            response = ResponseEntity.ok(turnoService.registrarTurno(turno));
+        if (pacienteService.buscar(t.getPaciente().getId())/* != null*/.isPresent() && odontologoService.buscar(t.getOdontologo().getId())/* != null*/.isPresent())
+            response = ResponseEntity.ok(turnoService.guardar(t));
 
         else
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -43,7 +45,7 @@ public class TurnoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Long id) {
         ResponseEntity<String> response;
-        if (turnoService.buscar(id) != null) { // Esta validacion no esta en el enunciado del ejericio, pero se las dejo para que la tengan.
+        if (turnoService.buscar(id)/* != null*/.isPresent()) { // Esta validacion no esta en el enunciado del ejericio, pero se las dejo para que la tengan
             turnoService.eliminar(id);
             response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Eliminado");
         } else {
@@ -53,18 +55,17 @@ public class TurnoController {
     }
 
     @PutMapping
-    public ResponseEntity<Turno> actualizarTurno(@RequestBody Turno turno) {
-        return ResponseEntity.ok(turnoService.actualizar(turno));
-
+    public ResponseEntity<Turno> actualizar(@RequestBody Turno t) {
+        return ResponseEntity.ok(turnoService.actualizar(t));
     }
 
-    @GetMapping("/turnoAlta")
-    public String welcome(Model model) {*/
-        /*model.addAttribute("nombre", "Juan Perez 2");
-        model.addAttribute("apellido", "Garcia");*/
-        /*model.addAttribute("turnos", turnoService.listar());
+    /*@GetMapping("/turnoAlta")
+    public String welcome(Model model) {
+        model.addAttribute("nombre", "Juan Perez 2");
+        model.addAttribute("apellido", "Garcia");
+        model.addAttribute("turnos", turnoService.listar());
         return "turnoAlta";
-    }*/
+    }
 
     /*@RequestMapping(value="/developer/{id}/skills", method=RequestMethod.POST)
     public String developersAddSkill(@PathVariable Long id, @RequestParam Long skillId, Model model) {

@@ -13,27 +13,27 @@ import java.util.List;
 @RestController
 @RequestMapping("/pacientes")
 public class PacienteController {
-    /*@Autowired
+    @Autowired
     private PacienteService pacienteService;
 
     @PostMapping()
-    public ResponseEntity<Paciente> registrarPaciente(@RequestBody Paciente paciente) {
-        return ResponseEntity.ok(pacienteService.guardar(paciente));
+    public ResponseEntity<Paciente> guardar(@RequestBody Paciente p) {
+        return ResponseEntity.ok(pacienteService.guardar(p));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Paciente> buscar(@PathVariable Long id) {
-        Paciente paciente = pacienteService.buscar(id);
+        Paciente p = pacienteService.buscar(id).orElse(null);
 
-        return ResponseEntity.ok(paciente);
+        return ResponseEntity.ok(p);
     }
 
     @PutMapping()
-    public ResponseEntity<Paciente> actualizar(@RequestBody Paciente paciente) { // ResponseEntity<Paciente> indica que retornamos un Paciente en body
+    public ResponseEntity<Paciente> actualizar(@RequestBody Paciente p) { // ResponseEntity<Paciente> indica que retornamos un Paciente en body
         ResponseEntity<Paciente> response = null;
 
-        if (paciente.getId() != null && pacienteService.buscar(paciente.getId()) != null)
-            response = ResponseEntity.ok(pacienteService.actualizar(paciente));
+        if (p.getId() != null && pacienteService.buscar(p.getId())/* != null*/.isPresent())
+            response = ResponseEntity.ok(pacienteService.actualizar(p));
         else
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
@@ -44,9 +44,9 @@ public class PacienteController {
     public ResponseEntity<String> eliminar(@PathVariable Long id) {
         ResponseEntity<String> response = null;
 
-        if (pacienteService.buscar(id) != null) {
+        if (pacienteService.buscar(id)/* != null*/.isPresent()) {
             pacienteService.eliminar(id);
-            response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Eliminado");
+            response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Eliminade");
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -55,8 +55,8 @@ public class PacienteController {
     }
 
     // Listar todes les pacientes
-    @GetMapping()
+    /*@GetMapping()
     public ResponseEntity<List<Paciente>> buscarPacientes(){
-        return ResponseEntity.ok(pacienteService.buscarTodos());
+        return ResponseEntity.ok(pacienteService.listar());
     }*/
 }
