@@ -18,8 +18,8 @@ public class OdontologoController {
     private OdontologoService odontologoService;
 
     @PostMapping()
-    public ResponseEntity<Odontologo> registrarOdontologo(@RequestBody Odontologo odontologo) {
-        return ResponseEntity.ok(odontologoService.registrarOdontologo(odontologo));
+    public ResponseEntity<Odontologo> guardar(@RequestBody Odontologo odontologo) {
+        return ResponseEntity.ok(odontologoService.guardar(odontologo));
     }
 
     @GetMapping("/{id}")

@@ -23,14 +23,14 @@ public class OdontologoServiceTests {
 
     @BeforeClass
     public static void cargarDataSet() {
-        odontologoService.registrarOdontologo(new Odontologo("Santiago", "Paz", 3455647));
+        odontologoService.guardar(new Odontologo("Santiago", "Paz", 3455647));
 
 
     }
 
     @Test
     public void guardarOdontologo() {
-        Odontologo odontologo = odontologoService.registrarOdontologo(new Odontologo("Juan", "Ramirez", 348971960));
+        Odontologo odontologo = odontologoService.guardar(new Odontologo("Juan", "Ramirez", 348971960));
         Assert.assertTrue(odontologo.getId() != null);
 
     }

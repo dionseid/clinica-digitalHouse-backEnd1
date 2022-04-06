@@ -2,36 +2,35 @@ package com.dh.clinica.service;
 
 import com.dh.clinica.repository.IDao;
 import com.dh.clinica.dominio.Odontologo;
+import com.dh.clinica.repository.impl.OdontologoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 
-//@Service
+@Service
 public class OdontologoService {
-    private IDao<Odontologo> odontologoDao;
+    @Autowired
+    private OdontologoRepository odontologoRepository;
 
-    public OdontologoService(IDao<Odontologo> odontologoDao) {
-        this.odontologoDao = odontologoDao;
-    }
-
-    public Odontologo registrarOdontologo(Odontologo odontologo) {
-        return odontologoDao.guardar(odontologo);
+    public Odontologo guardar(Odontologo o) {
+        return odontologoRepository.save(o);
     }
 
     public void eliminar(Long id) {
-        odontologoDao.eliminar(id);
+        odontologoRepository.deleteById(id);
     }
 
     public Odontologo buscar(Long id) {
-        return odontologoDao.buscar(id);
+        return odontologoRepository.findById(id).get();
     }
 
     public List<Odontologo> buscarTodos() {
-        return odontologoDao.buscarTodos();
+        return odontologoRepository.findAll();
     }
 
-    public Odontologo actualizar(Odontologo odontologo) {
-        return odontologoDao.actualizar(odontologo);
-    }
+    /*public Odontologo actualizar(Odontologo o) {
+        return odontologoRepository.actualizar(o);
+    }*/
 }

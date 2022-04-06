@@ -1,32 +1,38 @@
 package com.dh.clinica.service;
 
+import com.dh.clinica.dominio.Paciente;
 import com.dh.clinica.repository.IDao;
 import com.dh.clinica.dominio.Turno;
+import com.dh.clinica.repository.impl.PacienteRepository;
+import com.dh.clinica.repository.impl.TurnoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//@Service
+@Service
 public class TurnoService {
-    private IDao<Turno> turnoRepository;
+    @Autowired
+    private TurnoRepository turnoRepository;
 
-    public TurnoService(IDao<Turno> turnoRepository) {
-        this.turnoRepository = turnoRepository;
+    public Turno guardar(Turno t) {
+        //t.setFechaIngreso(new Date());
+        return turnoRepository.save(t);
     }
 
-    public Turno registrarTurno(Turno turno){
-        return  turnoRepository.guardar(turno);
+    public void eliminar(Long id) {
+        turnoRepository.deleteById(id);
     }
-    public List<Turno> listar(){
-        return turnoRepository.buscarTodos();
+
+    public Turno buscar(Long id) {
+        return turnoRepository.findById(id).get();
     }
-    public void eliminar(Long id){
-        turnoRepository.eliminar(id);
+
+    public List<Turno> buscarTodos() {
+        return turnoRepository.findAll();
     }
-    public Turno actualizar(Turno turno){
-        return turnoRepository.actualizar(turno);
-    }
-    public Turno buscar(Long id){
-        return turnoRepository.buscar(id);
-    }
+
+    /*public Turno actualizar(Turno t) {
+        return turnoRepository.actualizar(t);
+    }*/
 }
