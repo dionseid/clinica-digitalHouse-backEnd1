@@ -1,0 +1,113 @@
+window.addEventListener('load', function() {
+/* MÉTODOS GET PARA RELLENAR SELECTORES */
+    /*(function () {
+        const url = '/pacientes';
+        const settings = {
+            method: 'GET',
+        }
+
+        fetch(url, settings)
+            .then(response => response.json())
+            .then(data => {
+                for (paciente of data) {
+                    var selectElement = document.getElementById('paciente');
+                    selectElement.add(new Option(paciente.nombre + " " + paciente.apellido, paciente));
+                }
+            })
+    })
+
+    (function () {
+        let pathname = window.location.pathname;
+        if (pathname == "/turnoList.html") {
+            document.querySelector(".nav .nav-item a:last").addClass("active");
+        }
+    });
+
+    (function () {
+        const url2 = '/odontologos';
+        const settings2 = {
+            method: 'GET'
+        }
+
+        fetch(url2, settings2)
+            .then(response => response.json())
+            .then(data => {
+                for (odontologo of data) {
+                    var selectElement2 = document.getElementById('odontologo');
+                    selectElement2.add(new Option(odontologo.nombre + " " + odontologo.apellido, odontologo));
+                }
+            })
+    })
+
+    (function () {
+        let pathname = window.location.pathname;
+        if (pathname == "/turnoList.html") {
+            document.querySelector(".nav .nav-item a:last").addClass("active");
+        }
+    });*/
+
+    // Al cargar la pagina buscamos y obtenemos el formulario donde estarán los datos que le usuarie cargará del nuevo turno
+    const formulario = document.querySelector('#add_new_turno');
+
+    // Ante un submit del formulario se ejecutará la siguiente función
+    formulario.addEventListener('submit', function(event) {
+       // Creamos un JSON que tendrá los datos de un nuevo turno
+        //const select = document.querySelector('#paciente')
+        const formData = {
+            fecha: document.querySelector('#fecha').value,
+            hora: document.querySelector('#hora').value,
+            paciente: document.querySelector('#paciente').options[document.querySelector('#paciente').selectedIndex],
+            odontologo: document.querySelector('#odontologo > option').value,
+        };
+
+        // Invocamos utilizando la función fetch le API turnos con el método POST que guardará el turno que enviaremos en formato JSON
+        const url = '/turnos';
+        const settings = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        }
+
+        fetch(url, settings)
+            .then(response => response.json())
+            .then(data => {
+                 // Si no hay ningun error se muestra un mensaje diciendo que el turno se agrego bien
+                 let successAlert = '<div class="alert alert-success alert-dismissible">' +
+                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                     '<strong></strong> Turno agregado </div>'
+
+                 document.querySelector('#response').innerHTML = successAlert;
+                 document.querySelector('#response').style.display = "block";
+                 resetUploadForm();
+            }).catch(error => {
+                 // Si hay algun error se muestra un mensaje diciendo que el turno no se pudo guardar y se intente nuevamente
+                 let errorAlert = '<div class="alert alert-danger alert-dismissible">' +
+                                  '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                  '<strong> Error intente nuevamente</strong> </div>'
+
+                 document.querySelector('#response').innerHTML = errorAlert;
+                 document.querySelector('#response').style.display = "block";
+
+                 // Se dejan todos los campos vacíos por si se quiere ingresar otro turno
+                 resetUploadForm();
+            });
+    });
+
+    function resetUploadForm(){
+        document.querySelector('#fecha').value = "";
+        document.querySelector('#hora').value = "";
+        document.querySelector('#paciente > option').value = "";
+        document.querySelector('#odontologo > option').value = "";
+    }
+
+    (function(){
+        let pathname = window.location.pathname;
+        if (pathname === "/") {
+            document.querySelector(".nav .nav-item a:first").addClass("active");
+        } else if (pathname == "/turnoList.html") {
+            document.querySelector(".nav .nav-item a:last").addClass("active");
+        }
+    })();
+});
