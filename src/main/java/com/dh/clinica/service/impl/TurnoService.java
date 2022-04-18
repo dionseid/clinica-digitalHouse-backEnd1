@@ -1,9 +1,6 @@
-package com.dh.clinica.service;
+package com.dh.clinica.service.impl;
 
-import com.dh.clinica.dominio.Paciente;
-import com.dh.clinica.repository.IDao;
-import com.dh.clinica.dominio.Turno;
-import com.dh.clinica.repository.impl.PacienteRepository;
+import com.dh.clinica.entity.Turno;
 import com.dh.clinica.repository.impl.TurnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

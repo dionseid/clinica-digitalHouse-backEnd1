@@ -1,6 +1,4 @@
-package com.dh.clinica.dominio;
-
-import org.hibernate.annotations.Fetch;
+package com.dh.clinica.entity;
 
 import javax.persistence.*;
 import java.time.LocalTime;

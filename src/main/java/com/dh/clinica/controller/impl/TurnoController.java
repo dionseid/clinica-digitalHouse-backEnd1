@@ -1,14 +1,12 @@
-package com.dh.clinica.controller;
+package com.dh.clinica.controller.impl;
 
-import com.dh.clinica.repository.impl.TurnoListRepository;
-import com.dh.clinica.dominio.Turno;
-import com.dh.clinica.service.OdontologoService;
-import com.dh.clinica.service.PacienteService;
-import com.dh.clinica.service.TurnoService;
+import com.dh.clinica.entity.Turno;
+import com.dh.clinica.service.impl.OdontologoService;
+import com.dh.clinica.service.impl.PacienteService;
+import com.dh.clinica.service.impl.TurnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,19 +21,19 @@ public class TurnoController {
     @Autowired
     private OdontologoService odontologoService;
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<Turno> guardar(@RequestBody Turno t) {
         ResponseEntity<Turno> response;
-        if (pacienteService.buscar(t.getPaciente().getId())/* != null*/.isPresent() && odontologoService.buscar(t.getOdontologo().getId())/* != null*/.isPresent())
+        if (pacienteService.buscar(t.getPaciente().getId())/* != null*//*.isPresent() && odontologoService.buscar(t.getOdontologo().getId()) != null/*.isPresent()*//*) {
             response = ResponseEntity.ok(turnoService.guardar(t));
-
-        else
+            odontologoService.agregarTurno(t.getPaciente().getId(), t);
+        } else
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
         return response;
 
 
-    }
+    }*/
 
     @GetMapping
     public ResponseEntity<List<Turno>> listar() {
