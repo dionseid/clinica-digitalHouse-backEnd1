@@ -1,12 +1,16 @@
 package com.dh.clinica.service.impl;
 
 import com.dh.clinica.entity.dto.OdontologoDto;
+import com.dh.clinica.exceptions.BadRequestException;
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.service.impl.OdontologoService;
 
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +18,14 @@ import org.springframework.boot.context.config.ConfigDataResourceNotFoundExcepti
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RunWith(SpringJUnit4ClassRunner/*JUnit4*//*SpringRunner*/.class)
+//@RunWith(SpringJUnit4ClassRunner/*JUnit4*//*SpringRunner*/.class)
 @SpringBootTest
 public class OdontologoServiceTests {
     //private static OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2());
@@ -37,7 +42,7 @@ public class OdontologoServiceTests {
     }
 
     //@BeforeClass
-    public /*static*/ void cargarDataSet() {
+    public /*static*/ void cargarDataSet() throws Exception {
         //this.odontologoService.guardar(new Odontologo("Santiago", "Paz", 3455647));
         odontologoService.guardar(new OdontologoDto("Perez", "Enzo", 24242424));
         odontologoService.guardar(new OdontologoDto("Alvarez", "Julian", 9999));
@@ -45,48 +50,55 @@ public class OdontologoServiceTests {
     }
 
     @Test
-    public void guardar() {
-        this.cargarDataSet();
-        OdontologoDto/*Odontologo*/ o = odontologoService.guardar(new OdontologoDto/*Odontologo*/("Ramirez", "Juan", 348971960));
-        Assert.assertTrue(o.getId() != null);
+    public void guardar() throws Exception {
+        OdontologoDto/*Odontologo*/ odontologoGuardado = odontologoService.guardar(/*new OdontologoDto/*Odontologo*//*("Ramirez", "Juan", 348971960)*/odontologo);
+        Assert.assertTrue(odontologoGuardado.getId() != null);
     }
 
     @Test
-    public void listarPorNombre() {
-        odontologoService.guardar(new OdontologoDto("Armani", "Franco", 1111));
-        odontologoService.guardar(new OdontologoDto/*Odontologo*/("Ramirez", "Juan", 348971960));
-        assertNotNull(odontologoService.listarPorNombre("Armani"));
-        assertNotNull(odontologoService.listarPorNombre("Ramirez"));
+    public void listar() throws Exception {
+        cargarDataSet();
+        /*Set*/List<OdontologoDto/*Odontologo*/> odontologos = odontologoService.listar();
+        Assert.assertTrue(!odontologos.isEmpty());
+        Assert.assertTrue(odontologos.size() > 0/* == 1*/);
+        //System.out.println(odontologos);
+    }
+
+    @Test
+    public void buscar() throws ResourceNotFoundException, BadRequestException {
+        //this.setUp();
+        OdontologoDto odontologoABuscar = odontologoService.guardar(odontologo);
+        OdontologoDto odontologoEncontrado = odontologoService.buscar(odontologoABuscar.getId());
+        Assert.assertTrue(odontologoEncontrado != null);
     }
 
     @Test
     public void eliminar() throws Exception {
         /*this.cargarDataSet();
         odontologoService.eliminar(1L);
-        Assert.assertTrue(odontologoService.buscar(1L) == null/*.isEmpty()*///);
+        Assert.assertTrue(odontologoService.buscar(1L) == null);/*.isEmpty()*///);*/
 
-        boolean thrown = false;
+        /*boolean thrown = true;
         OdontologoDto o = odontologoService.guardar(new OdontologoDto("Quinteros", "Juanfer", 10101010));
         odontologoService.eliminar(o.getId());
         try {
             odontologoService.buscar(o.getId());
         } catch (NoSuchElementException e) {
-            thrown = true;
+            thrown = false;
         }
-        assertFalse(thrown);
+        assertFalse(thrown);*/
 
-        /*OdontologoDto o = odontologoService.guardar(odontologo);
-        assertNotNull(odontologoService.buscar(o.getId()));
-        odontologoService.eliminar(o.getId());
-        assertThrows(ConfigDataResourceNotFoundException.class, () -> odontologoService.buscar(o.getId()));*/
+        //this.setUp();
+        OdontologoDto odontologoGuardado = odontologoService.guardar(odontologo);
+        assertNotNull(odontologoService.buscar(odontologoGuardado.getId()));
+        odontologoService.eliminar(odontologoGuardado.getId());
+        assertThrows(com.dh.clinica.exceptions.BadRequestException.class/*org.hibernate.LazyInitializationException.class*//*ConfigDataResourceNotFoundException.class*/, () -> odontologoService.buscar(odontologoGuardado.getId()));
     }
 
     @Test
-    public void traerTodos() {
+    public void listarPorNombre() throws Exception {
         cargarDataSet();
-        Set/*List*/<OdontologoDto/*Odontologo*/> odontologos = odontologoService.listar();
-        Assert.assertTrue(!odontologos.isEmpty());
-        Assert.assertTrue(odontologos.size() > 0/* == 1*/);
-        System.out.println(odontologos);
+        assertNotNull(odontologoService.listarPorNombre("Armani"));
+        assertNotNull(odontologoService.listarPorNombre("Alvarez"));
     }
 }

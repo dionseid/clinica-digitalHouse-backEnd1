@@ -4,6 +4,8 @@ package com.dh.clinica.controller.impl;
 
 import com.dh.clinica.entity.dto.OdontologoDto;
 import com.dh.clinica.entity.dto.OdontologoTurnosDto;
+import com.dh.clinica.exceptions.BadRequestException;
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.service.impl.OdontologoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,7 @@ public class OdontologoController {
     private OdontologoService odontologoService;
 
     @PostMapping()
-    public ResponseEntity<?/*OdontologoDto*/> guardar(@RequestBody OdontologoDto o) {
+    public ResponseEntity<?/*OdontologoDto*/> guardar(@RequestBody OdontologoDto o) throws BadRequestException {
         //return ResponseEntity.ok(odontologoService.guardar(o));
         odontologoService.guardar(o);
         return ResponseEntity.ok(HttpStatus.OK);
@@ -33,7 +35,7 @@ public class OdontologoController {
     }
 
     @PutMapping()
-    public ResponseEntity<?/*OdontologoDto*//*Odontologo*/> actualizar(@RequestBody OdontologoDto/*Odontologo*/ o) {
+    public ResponseEntity<?/*OdontologoDto*//*Odontologo*/> actualizar(@RequestBody OdontologoDto/*Odontologo*/ o) throws BadRequestException, ResourceNotFoundException {
         ResponseEntity<?/*OdontologoDto*//*Odontologo*/> response = null;
 
         if (o.getId() != null && odontologoService.buscar(o.getId()) != null/*.isPresent()*/) {
@@ -45,7 +47,7 @@ public class OdontologoController {
     }
 
     @GetMapping("id/{id}")
-    public OdontologoDto/*ResponseEntity<OdontologoDto/*Odontologo>*/ buscar(@PathVariable Long id) {
+    public OdontologoDto/*ResponseEntity<OdontologoDto/*Odontologo>*/ buscar(@PathVariable Long id) throws BadRequestException {
         OdontologoDto o = odontologoService.buscar(id)/*.orElse(null)*/;
 
         //return ResponseEntity.ok(o); // Me va a devolver status OK aunque la respuesta sea un objeto nulo
@@ -53,7 +55,7 @@ public class OdontologoController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?/*String*/> eliminar(@PathVariable Long id) {
+    public ResponseEntity<?/*String*/> eliminar(@PathVariable Long id) throws BadRequestException {
         ResponseEntity<String> response = null;
 
         if (odontologoService.buscar(id) != null/*.isPresent()*/) {

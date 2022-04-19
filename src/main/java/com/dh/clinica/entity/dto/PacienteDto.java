@@ -9,7 +9,7 @@ public class PacienteDto {
     private Long id;
     private String nombre;
     private String apellido;
-    private int dni;
+    private Integer dni;
     private String email;
     private LocalDate fechaIngreso;
     private DomicilioDto domicilio;

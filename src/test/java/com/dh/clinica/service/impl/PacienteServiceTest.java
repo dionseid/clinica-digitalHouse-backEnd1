@@ -4,6 +4,7 @@ import com.dh.clinica.entity.Domicilio;
 import com.dh.clinica.entity.Paciente;
 import com.dh.clinica.entity.dto.DomicilioDto;
 import com.dh.clinica.entity.dto.PacienteDto;
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.service.impl.PacienteService;
 
 import org.junit.Assert;
@@ -48,6 +49,35 @@ public class PacienteServiceTest {
         assertNotNull(pacienteService.buscar(p.getId()));
     }
 
+    @Test
+    public void listar() throws Exception {
+        //List<Paciente> pacientes = pacienteService.listar();
+        //Assert.assertTrue(!pacientes.isEmpty());
+        //Assert.assertTrue(pacientes.size() /*> 0*///== 2);
+        //System.out.println(pacientes);
+        pacienteService.guardar(paciente);
+        assertNotEquals(0, pacienteService.listar().size());
+    }
+
+    @Test
+    public void actualizar() throws Exception {
+        PacienteDto p = pacienteService.guardar(paciente);
+        PacienteDto original = pacienteService.buscar(p.getId());
+        p.setNombre("Pablito");
+        PacienteDto actualizade = pacienteService.actualizar(p);
+        assertNotEquals(actualizade, original);
+    }
+
+    //@Test
+    //public void eliminar() throws Exception {
+        //pacienteService.eliminar(3L);
+        //Assert.assertTrue(pacienteService.buscar(3L)/* == null*///.isEmpty());
+        /*PacienteDto p = pacienteService.guardar(paciente);
+        assertNotNull(pacienteService.buscar(p.getId()));
+        pacienteService.eliminar(p.getId());
+        assertThrows(ResourceNotFoundException.class, () -> pacienteService.buscar(p.getId()));
+    }*/
+
     //@Test
     //public void agregarYBuscarPacienteTest() {
         //this.cargarDataSet();
@@ -55,20 +85,5 @@ public class PacienteServiceTest {
         //Paciente p = pacienteService.guardar(new Paciente("Tomas", "Pereyra", "tomaspereyra@gmail.com", 12345678, new Date(), d));
 
         //Assert.assertNotNull(pacienteService.buscar(p.getId()));
-    //}
-
-    /*@Test
-    public void eliminarPacienteTest() {
-        //pacienteService.eliminar(3L);
-        //Assert.assertTrue(pacienteService.buscar(3L)/* == null*///.isEmpty());
-
-    //}
-
-    /*@Test
-    public void traerTodos() {
-        //List<Paciente> pacientes = pacienteService.listar();
-        //Assert.assertTrue(!pacientes.isEmpty());
-        //Assert.assertTrue(pacientes.size() /*> 0*///== 2);
-        //System.out.println(pacientes);
     //}
 }

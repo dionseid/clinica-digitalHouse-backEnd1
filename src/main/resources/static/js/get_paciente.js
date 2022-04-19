@@ -25,8 +25,8 @@ window.addEventListener('load', function () {
           //de llamar a la API para eliminar un odontologo
           let deleteButton = '<button' +
             ' id=' + '\"' + 'btn_delete_' + paciente.id + '\"' +
-            ' type="button" onclick="deleteBy(' + paciente.id + ')" class="btn btn-danger btn_delete">' +
-            '&times' +
+            ' type="button" class="btn btn-danger btn_delete" data-toggle="modal" data-target="#delete-modal"' +
+            '>&times' +
             '</button>';
 
           //por cada odontologo creamos un boton que muestra el id y que al hacerle clic invocará
@@ -50,9 +50,8 @@ window.addEventListener('load', function () {
             '<td class=\"td_fechaIngreso\">' + paciente.fechaIngreso + '</td>' +
             '<td class=\"td_domicilio\"> calle ' + domicilio.calle + ', N°: ' + domicilio.numero + '</td>' +
             '<td class=\"td_localidad\">' + domicilio.localidad + '</td>' +
-            '<td class=\"td_provincia\">' + domicilio.provincia + '</td>'
-          '<td>' + deleteButton + '</td>';
-
+            '<td class=\"td_provincia\">' + domicilio.provincia + '</td>' +
+            '<td>' + deleteButton + '</td>';
         };
 
       })

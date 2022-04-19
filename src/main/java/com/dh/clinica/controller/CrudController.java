@@ -13,7 +13,7 @@ public interface CrudController<T> {
 
     ResponseEntity<?> listar() throws BadRequestException, ResourceNotFoundException;
 
-    //ResponseEntity<?> actualizar(@RequestBody T t); //throws BadRequestException, ResourceNotFoundException;
+    ResponseEntity<?> actualizar(@RequestBody T t) throws BadRequestException, ResourceNotFoundException;
 
     ResponseEntity<?> buscar(@PathVariable Long id) throws BadRequestException, ResourceNotFoundException;
 

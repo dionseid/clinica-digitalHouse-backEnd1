@@ -1,6 +1,8 @@
 package com.dh.clinica.controller.impl;
 
 import com.dh.clinica.entity.Turno;
+import com.dh.clinica.exceptions.BadRequestException;
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.service.impl.OdontologoService;
 import com.dh.clinica.service.impl.PacienteService;
 import com.dh.clinica.service.impl.TurnoService;
@@ -21,19 +23,17 @@ public class TurnoController {
     @Autowired
     private OdontologoService odontologoService;
 
-    /*@PostMapping
-    public ResponseEntity<Turno> guardar(@RequestBody Turno t) {
+    @PostMapping
+    public ResponseEntity<Turno> guardar(@RequestBody Turno t) throws BadRequestException {
         ResponseEntity<Turno> response;
-        if (pacienteService.buscar(t.getPaciente().getId())/* != null*//*.isPresent() && odontologoService.buscar(t.getOdontologo().getId()) != null/*.isPresent()*//*) {
+        if (pacienteService.buscar(t.getPaciente().getId()) != null/*.isPresent()*/ && odontologoService.buscar(t.getOdontologo().getId()) != null/*.isPresent()*/) //{
             response = ResponseEntity.ok(turnoService.guardar(t));
-            odontologoService.agregarTurno(t.getPaciente().getId(), t);
-        } else
+            //odontologoService.agregarTurno(t.getPaciente().getId(), t);
+        /*}*/ else
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
         return response;
-
-
-    }*/
+    }
 
     @GetMapping
     public ResponseEntity<List<Turno>> listar() {

@@ -12,7 +12,7 @@ public interface CrudService<T> {
 
     List<T> listar();
 
-    /*T actualizar(T t); //throws BadRequestException, ResourceNotFoundException;*/
+    T actualizar(T t) throws BadRequestException, ResourceNotFoundException;
 
     T buscar(Long id) throws BadRequestException, ResourceNotFoundException;
 

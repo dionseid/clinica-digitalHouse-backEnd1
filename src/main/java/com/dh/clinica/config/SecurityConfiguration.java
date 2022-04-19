@@ -15,17 +15,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final UsuarieService usuarieService;
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private /*final*/ UsuarieService usuarieService;
+    @Autowired
+    private /*final*/ BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public WebSecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, UsuarieService usuarieService) {
+    public SecurityConfiguration(BCryptPasswordEncoder bCryptPasswordEncoder, UsuarieService usuarieService) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.usuarieService = usuarieService;
     }
 
-    public WebSecurityConfig(boolean disableDefaults, BCryptPasswordEncoder bCryptPasswordEncoder, UsuarieService usuarieService) {
+    public SecurityConfiguration(boolean disableDefaults, BCryptPasswordEncoder bCryptPasswordEncoder, UsuarieService usuarieService) {
         super(disableDefaults);
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.usuarieService = usuarieService;
