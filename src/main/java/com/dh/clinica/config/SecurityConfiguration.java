@@ -23,33 +23,43 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+        /*http.csrf()
+                .disable()
                 .authorizeRequests()
-                    .antMatchers("/turnos/**").hasAuthority("USER")
+                .antMatchers("/turnos/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/pacientes/**").hasRole("ADMIN")
+                .antMatchers("/odontologos/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and().formLogin()
+                .and().logout();*/
+
+        http.csrf()
+                .disable()
+                .authorizeRequests()
+                    .antMatchers("/turnos/**").hasAnyRole/*hasAuthority*/("USER", "ADMIN")
                     .antMatchers("/odontologos/**", "/pacientes/**").hasAuthority("ADMIN")
                     .antMatchers("/index.html",
                             "/turnoAlta.html",
-                            "turnoList.html")
+                            "/turnoList.html")
                         .hasAuthority("USER")
                     .antMatchers("/index.html",
                             "/odontologoAlta.html",
                             "/pacienteAlta.html",
+                            "/turnoAlta.html",
                             "/usuarieAlta.html",
                             "/odontologoList.html",
                             "/pacienteList.html",
-                            "/usuarieList.html")
+                            "/usuarieList.html",
+                            "/turnoList.html")
                         .hasAuthority("ADMIN")
                     .anyRequest().authenticated()
-                    .and()
-                .formLogin()
-                    .permitAll()
-                    .and()
-                .logout()
-                    .logoutSuccessUrl("/login")
-                    .permitAll()
-                    .and()
-                .exceptionHandling().accessDeniedPage("/403.html");
+                    .and().formLogin()
+                        .permitAll()
+                    .and().logout()
+                        .logoutSuccessUrl("/login")
+                        .permitAll()
+                        .and()
+                    .exceptionHandling().accessDeniedPage("/403.html");
     }
 
     @Override

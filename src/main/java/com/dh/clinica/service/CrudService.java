@@ -16,5 +16,5 @@ public interface CrudService<T> {
 
     T buscar(Long id) throws BadRequestException, ResourceNotFoundException;
 
-    //void eliminar(Long id); //throws BadRequestException, ResourceNotFoundException;
+    void eliminar(Long id) throws BadRequestException, ResourceNotFoundException;
 }

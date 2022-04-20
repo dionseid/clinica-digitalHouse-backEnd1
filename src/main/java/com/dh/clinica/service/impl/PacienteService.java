@@ -97,7 +97,10 @@ public class PacienteService implements IPacienteService {
         return springConfig.getModelMapper().map(p, PacienteDto.class);
     }
 
-    /*public void eliminar(Long id) {
+    @Override
+    public void eliminar(Long id) throws BadRequestException, ResourceNotFoundException {
+        if (id == null || id < 1) throw new BadRequestException("El ID del paciente no puede ser null ni negativo");
+        if (!pacienteRepository.existsById(id)) throw new ResourceNotFoundException("No existe ningún paciente con ID: " + id);
         pacienteRepository.deleteById(id);
-    }*/
+    }
 }

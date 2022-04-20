@@ -106,6 +106,16 @@ public class PacienteController implements CrudController<PacienteDto> {
         return response;
     }*/
 
-
+    @Override
+    @ApiOperation(value = "Elimina un paciente")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "success | OK"),
+            @ApiResponse(code = 400, message = "bad request"),
+            @ApiResponse(code = 404, message = "not found") })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminar(@PathVariable Long id) throws BadRequestException, ResourceNotFoundException {
+        pacienteService.eliminar(id);
+        return ResponseEntity.ok("Se eliminó le paciente con ID: " + id);
+    }
 
 }

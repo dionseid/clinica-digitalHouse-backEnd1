@@ -17,5 +17,5 @@ public interface CrudController<T> {
 
     ResponseEntity<?> buscar(@PathVariable Long id) throws BadRequestException, ResourceNotFoundException;
 
-    /*ResponseEntity<String> eliminar(@PathVariable Integer id); //throws BadRequestException, ResourceNotFoundException;*/
+    ResponseEntity<String> eliminar(@PathVariable Long id) throws BadRequestException, ResourceNotFoundException;
 }
