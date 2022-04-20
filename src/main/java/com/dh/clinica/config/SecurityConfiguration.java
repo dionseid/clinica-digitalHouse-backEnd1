@@ -14,24 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private /*final*/ UsuarieService usuarieService;
     @Autowired
     private /*final*/ BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    public SecurityConfiguration(BCryptPasswordEncoder bCryptPasswordEncoder, UsuarieService usuarieService) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.usuarieService = usuarieService;
-    }
-
-    public SecurityConfiguration(boolean disableDefaults, BCryptPasswordEncoder bCryptPasswordEncoder, UsuarieService usuarieService) {
-        super(disableDefaults);
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.usuarieService = usuarieService;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -44,7 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/turnoAlta.html",
                             "turnoList.html")
                         .hasAuthority("USER")
-                    .antMatchers("/odontologoAlta.html",
+                    .antMatchers("/index.html",
+                            "/odontologoAlta.html",
                             "/pacienteAlta.html",
                             "/usuarieAlta.html",
                             "/odontologoList.html",
@@ -57,13 +46,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .and()
                 .logout()
+                    .logoutSuccessUrl("/login")
                     .permitAll()
                     .and()
-                .exceptionHandling().accessDeniedPage("/403");
+                .exceptionHandling().accessDeniedPage("/403.html");
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
@@ -74,4 +64,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         provider.setUserDetailsService(usuarieService);
         return provider;
     }
+
+    /*public SecurityConfiguration(BCryptPasswordEncoder bCryptPasswordEncoder, UsuarieService usuarieService) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.usuarieService = usuarieService;
+    }
+
+    public SecurityConfiguration(boolean disableDefaults, BCryptPasswordEncoder bCryptPasswordEncoder, UsuarieService usuarieService) {
+        super(disableDefaults);
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.usuarieService = usuarieService;
+    }*/
 }

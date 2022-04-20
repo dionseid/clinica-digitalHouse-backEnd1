@@ -40,7 +40,7 @@ public class OdontologoController {
 
         if (o.getId() != null && odontologoService.buscar(o.getId()) != null/*.isPresent()*/) {
             odontologoService.actualizar(o);
-            response = ResponseEntity.ok(HttpStatus.OK);
+            response = ResponseEntity.ok(/*HttpStatus.OK*/o);
         } else
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return response;

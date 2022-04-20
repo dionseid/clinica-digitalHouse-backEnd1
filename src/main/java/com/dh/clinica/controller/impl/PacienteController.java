@@ -59,9 +59,18 @@ public class PacienteController implements CrudController<PacienteDto> {
     }*/
 
     @Override
+    @ApiOperation(value = "Actualiza un paciente")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success | OK"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not Found") })
+    @PutMapping
     public ResponseEntity<?> actualizar(PacienteDto pacienteDto) throws BadRequestException, ResourceNotFoundException {
-        PacienteDto actualizade = pacienteService.actualizar(pacienteDto);
-        return ResponseEntity.ok(actualizade);
+        Long pacienteDtoId = pacienteDto.getId();
+
+        if (pacienteDtoId != null && pacienteService.buscar(pacienteDtoId) != null)
+            return ResponseEntity.ok(pacienteService.actualizar(pacienteDto));
+        else throw new ResourceNotFoundException("No existe ningún paciente con ID: " + pacienteDtoId);
     }
 
     @Override
@@ -96,4 +105,7 @@ public class PacienteController implements CrudController<PacienteDto> {
 
         return response;
     }*/
+
+
+
 }

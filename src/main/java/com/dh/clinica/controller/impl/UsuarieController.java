@@ -1,4 +1,4 @@
-package com.dh.clinica.controller.impl;
+/*package com.dh.clinica.controller.impl;
 
 import com.dh.clinica.entity.auth.Usuarie;
 import com.dh.clinica.exceptions.BadRequestException;
@@ -45,4 +45,4 @@ public class UsuarieController {
     public String error() {
         return "<h1>Error 403: acceso denegado o prohibido</h1>";
     }
-}
+}*/

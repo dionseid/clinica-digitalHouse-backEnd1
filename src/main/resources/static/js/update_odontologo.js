@@ -62,10 +62,12 @@ window.addEventListener('load', function () {
     const formulario = document.querySelector('#update_odontologo_form');
 
     formulario.addEventListener('submit', function (event) {
+        event.preventDefault();
         let odontologoId = document.querySelector('#odontologo_id').value;
+        let odontologoData;
 
         const formData = {
-            id: document.querySelector('#odontologo_id').value,
+            id: odontologoId,
             apellido: document.querySelector('#apellido').value,
             nombre: document.querySelector('#nombre').value,
             matricula: document.querySelector('#matricula').value
@@ -82,35 +84,52 @@ window.addEventListener('load', function () {
             .then(response => response.json())
             .then(data => {
                 let odontologo = data;
-                let odontologoString = "{apellido:" + odontologo.apellido + " , nombre:" + odontologo.nombre +
-                    " , matricula:" + odontologo.matricula + "}";
+                odontologoData = data;
+                // console.log("JSON response in odontologo: " + odontologo.toString(), odontologo.nombre.toString());
+                let odontologoString = "{apellido: " + odontologo.apellido + ", nombre: " + odontologo.nombre +
+                    ", matricula: " + odontologo.matricula + "}";
                 let successAlert = '<div class="alert alert-success alert-dismissible">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong> odontólogo = </strong> ' + data.toString();
+                    '<strong> odontólogo = </strong> ' + /*data.toString()*/ odontologoString;
                 '</div>'
 
+                //$("#response").empty();
+                $("#response").append(successAlert);
+                $("#response").css({ "display": "block" });
+                resetUploadForm();
+
                 // Change the updated data for odontólogo table record
-                $("#tr_" + odontologoId + " td.td_id").text(odontologo.id);
+                //$("#tr_" + odontologoId + " td.td_id").text(odontologo.id);
                 $("#tr_" + odontologoId + " td.td_nombre").text(odontologo.nombre);
                 $("#tr_" + odontologoId + " td.td_apellido").text(odontologo.apellido);
                 $("#tr_" + odontologoId + " td.td_matricula").text(odontologo.matricula);
-
-                $("#response").empty();
-                $("#response").append(successAlert);
-                $("#response").css({ "display": "block" });
-
             }).catch(error => {
+                console.log(error);
                 let errorAlert = '<div class="alert alert-danger alert-dismissible">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                     '<strong> Error </strong></div>';
 
-                $("#response").empty();
+                //$("#response").empty();
                 $("#response").append(errorAlert);
                 $("#response").css({ "display": "block" });
-            })
+                resetUploadForm();
+            })/*.finally(() => {
+                // Change the updated data for odontólogo table record
+                $("#tr_" + odontologoId + " td.td_id").text(odontologoData.id);
+                $("#tr_" + odontologoId + " td.td_nombre").text(odontologoData.nombre);
+                $("#tr_" + odontologoId + " td.td_apellido").text(odontologoData.apellido);
+                $("#tr_" + odontologoId + " td.td_matricula").text(odontologoData.matricula);
+                event.preventDefault()
+            })*/
 
-    })
-})
+    });
+
+    function resetUploadForm() {
+        $("#nombre").val("");
+        $("#apellido").val("");
+        $("#matricula").val("");
+    }
+});
 
 function find(id) {
     const url = '/odontologos' + "/id/" + id;

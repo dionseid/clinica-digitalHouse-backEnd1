@@ -66,20 +66,19 @@ public class PacienteService implements IPacienteService {
             throw new BadRequestException("No se pudo actualizar le paciente null");
         if (pacienteDto.getId() == null)
             throw new BadRequestException("El ID del paciente a actualizar no puede ser null");
-        Optional<Paciente> pacienteEnBD = pacienteRepository.findById(pacienteDto.getId());
-        if (pacienteEnBD.isPresent()) {
-            if (pacienteDto.getNombre() != null) pacienteEnBD.get().setNombre(pacienteDto.getNombre());
-            if (pacienteDto.getApellido() != null) pacienteEnBD.get().setApellido(pacienteDto.getApellido());
-            if (pacienteDto.getDni() != null) pacienteEnBD.get().setDni(pacienteDto.getDni());
-            if (pacienteDto.getEmail() != null) pacienteEnBD.get().setEmail(pacienteDto.getEmail());
-            if (pacienteDto.getFechaIngreso() != null)
-                pacienteEnBD.get().setFechaIngreso(pacienteDto.getFechaIngreso());
+        Paciente pacienteEnBD = pacienteRepository.findById(pacienteDto.getId()).get();
+        if (pacienteEnBD != null) {
+            if (pacienteDto.getNombre() != null) pacienteEnBD.setNombre(pacienteDto.getNombre());
+            if (pacienteDto.getApellido() != null) pacienteEnBD.setApellido(pacienteDto.getApellido());
+            if (pacienteDto.getDni() != null) pacienteEnBD.setDni(pacienteDto.getDni());
+            if (pacienteDto.getEmail() != null) pacienteEnBD.setEmail(pacienteDto.getEmail());
+            if (pacienteDto.getFechaIngreso() != null) pacienteEnBD.setFechaIngreso(pacienteDto.getFechaIngreso());
             if (pacienteDto.getDomicilio() != null) {
-                DomicilioDto actualizado = domicilioService.actualizar(pacienteDto.getDomicilio());
-                pacienteEnBD.get().setDomicilio(springConfig.getModelMapper().map(actualizado, Domicilio.class));
+                DomicilioDto domicilioActualizado = domicilioService.actualizar(pacienteDto.getDomicilio());
+                pacienteEnBD.setDomicilio(springConfig.getModelMapper().map(domicilioActualizado, Domicilio.class));
             }
-            Paciente actualizade = pacienteEnBD.get();
-            pacienteDto = springConfig.getModelMapper().map(pacienteRepository.save(actualizade), PacienteDto.class);
+            Paciente pacienteActualizade = pacienteEnBD;
+            pacienteDto = springConfig.getModelMapper().map(pacienteRepository.save(pacienteActualizade), PacienteDto.class);
         } else throw new ResourceNotFoundException("Le paciente no existe");
         return pacienteDto;
     }

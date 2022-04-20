@@ -19,18 +19,19 @@ import java.util.Set;
 
 @Component
 public class DataLoader implements ApplicationRunner {
-    private final UsuarieService usuarieService;
+    private /*final*/ UsuarieRepository/*Service*/ usuarieRepository;
 
     @Autowired
-    public DataLoader(UsuarieService usuarieService) {
-        this.usuarieService = usuarieService;
+    public DataLoader(UsuarieRepository usuarieRepository) {
+        this.usuarieRepository = usuarieRepository;
     }
 
-    public void run(ApplicationArguments args) throws BadRequestException {
+    public void run(ApplicationArguments args) /*throws BadRequestException*/ {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String password = passwordEncoder.encode("admin");
-        String password2 = passwordEncoder.encode("user");
-        usuarieService.guardar(new Usuarie(123456789, "admin", "admin@gmail.com", password, Set.of(new Rol("ADMIN"), new Rol("USER"))));
-        usuarieService.guardar(new Usuarie(123456789, "user", "user@gmail.com", password2, Set.of(new Rol("USER"))));
+        String hashedPassword = passwordEncoder.encode("admin");
+        BCryptPasswordEncoder passwordEncoder2 = new BCryptPasswordEncoder();
+        String hashedPassword2 = passwordEncoder2.encode("user");
+        usuarieRepository.save(new Usuarie(123456789, "admin", "admin@gmail.com", hashedPassword, Rol.ADMIN/*Set.of(new Rol("ADMIN"), new Rol("USER"))*/));
+        usuarieRepository.save(new Usuarie(123456789, "user", "user@gmail.com", hashedPassword2, Rol.USER/*Set.of(new Rol("USER"))*/));
     }
 }

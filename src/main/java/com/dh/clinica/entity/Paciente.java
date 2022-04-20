@@ -61,4 +61,8 @@ public class Paciente {
     public int hashCode() {
         return Objects.hash(id, nombre, apellido, email, dni, fechaIngreso, domicilio);
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 }

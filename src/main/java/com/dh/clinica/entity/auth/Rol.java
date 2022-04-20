@@ -1,6 +1,6 @@
 package com.dh.clinica.entity.auth;
 
-import lombok.Getter;
+/*import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -21,4 +21,8 @@ public class Rol {
     public Rol(String name) {
         this.name = name;
     }
+}*/
+
+public enum Rol {
+    USER,ADMIN
 }

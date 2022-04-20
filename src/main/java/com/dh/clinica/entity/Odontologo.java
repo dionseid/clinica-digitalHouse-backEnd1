@@ -116,9 +116,9 @@ public class Odontologo {
         this.matricula = matricula;
     }
 
-    /*public Long getId() {
+    public Long getId() {
         return id;
-    }*/
+    }
 
     @Override
     public String toString() {
