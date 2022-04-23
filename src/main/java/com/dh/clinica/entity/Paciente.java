@@ -20,7 +20,8 @@ public class Paciente {
     @Id
     //@SequenceGenerator(name = "paciente_sequence", sequenceName = "paciente_sequence", allocationSize = 1)
     @GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "paciente_sequence")
-    private Long id;
+    @Column(name = "paciente_id")
+    private Integer id;
 
     @Setter
     private String nombre;
@@ -43,6 +44,10 @@ public class Paciente {
     @ToString.Exclude
     private Set<Turno> turnos = new HashSet<>();
 
+    public void setTurnos(Set<Turno> turnos) {
+        this.turnos = turnos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,9 +65,5 @@ public class Paciente {
     @Override
     public int hashCode() {
         return Objects.hash(id, nombre, apellido, email, dni, fechaIngreso, domicilio);
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 }

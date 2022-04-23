@@ -1,11 +1,16 @@
 package com.dh.clinica.controller.impl;
 
+import com.dh.clinica.controller.CrudController;
 import com.dh.clinica.entity.Turno;
+import com.dh.clinica.entity.dto.TurnoDto;
 import com.dh.clinica.exceptions.BadRequestException;
 import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.service.impl.OdontologoService;
 import com.dh.clinica.service.impl.PacienteService;
 import com.dh.clinica.service.impl.TurnoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/turnos")
-public class TurnoController {
+public class TurnoController implements CrudController<TurnoDto> {
     @Autowired
     private TurnoService turnoService;
     @Autowired
@@ -23,38 +28,55 @@ public class TurnoController {
     @Autowired
     private OdontologoService odontologoService;
 
-    @PostMapping
-    public ResponseEntity<Turno> guardar(@RequestBody Turno t) throws BadRequestException {
-        ResponseEntity<Turno> response;
-        if (pacienteService.buscar(t.getPaciente().getId()) != null/*.isPresent()*/ && odontologoService.buscar(t.getOdontologo().getId()) != null/*.isPresent()*/) //{
-            response = ResponseEntity.ok(turnoService.guardar(t));
+    @Override
+    @ApiOperation(value = "Crea un nuevo turno")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "success | OK"),
+            @ApiResponse(code = 400, message = "bad request") })
+    @PostMapping()
+    public ResponseEntity<?> guardar(@RequestBody TurnoDto turno) throws BadRequestException, ResourceNotFoundException {
+        //ResponseEntity<Turno> response;
+        //if (pacienteService.buscar(turno.getPaciente().getId()) != null/*.isPresent()*/ && odontologoService.buscar(turno.getOdontologo().getId()) != null/*.isPresent()*/) //{
+            //response = ResponseEntity.ok(turnoService.guardar(turno));
             //odontologoService.agregarTurno(t.getPaciente().getId(), t);
-        /*}*/ else
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        /*}*/ //else
+            //response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
-        return response;
+        //return response;
+
+        TurnoDto turnoGuardado = turnoService.guardar(turno);
+        return ResponseEntity.ok(turnoGuardado);
     }
 
+    @Override
+    @ApiOperation(value = "Busca todos los turnos")
+    @ApiResponses(value = { @ApiResponse(code = 400, message = "bad request") })
     @GetMapping
-    public ResponseEntity<List<Turno>> listar() {
+    public ResponseEntity<List<TurnoDto>> listar() {
         return ResponseEntity.ok(turnoService.listar());
     }
 
+    @Override
+    @PutMapping
+    public ResponseEntity<?> actualizar(@RequestBody TurnoDto t) throws BadRequestException, ResourceNotFoundException {
+        return ResponseEntity.ok(turnoService.actualizar(t));
+    }
+
+    @Override
+    public ResponseEntity<?> buscar(Integer id) throws BadRequestException, ResourceNotFoundException {
+        return null;
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminar(@PathVariable Long id) {
+    public ResponseEntity<String> eliminar(@PathVariable Integer id) throws BadRequestException, ResourceNotFoundException {
         ResponseEntity<String> response;
-        if (turnoService.buscar(id)/* != null*/.isPresent()) { // Esta validacion no esta en el enunciado del ejericio, pero se las dejo para que la tengan
+        if (turnoService.buscar(id) != null) { // Esta validacion no esta en el enunciado del ejericio, pero se las dejo para que la tengan
             turnoService.eliminar(id);
             response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Eliminado");
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return response;
-    }
-
-    @PutMapping
-    public ResponseEntity<Turno> actualizar(@RequestBody Turno t) {
-        return ResponseEntity.ok(turnoService.actualizar(t));
     }
 
     /*@GetMapping("/turnoAlta")

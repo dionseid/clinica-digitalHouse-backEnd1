@@ -23,6 +23,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        /*http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/odontologos/**", "/pacientes/**")
+                .hasAuthority("ADMIN")
+                .antMatchers("/odontologoAlta.html", "/pacienteAlta.html", "/odontologoList.html","/pacienteList.html" )
+                .hasAuthority("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/login")
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/403.html");*/
+
+
         /*http.csrf()
                 .disable()
                 .authorizeRequests()
@@ -36,8 +54,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                    .antMatchers("/turnos/**").hasAnyRole/*hasAuthority*/("USER", "ADMIN")
-                    .antMatchers("/odontologos/**", "/pacientes/**").hasAuthority("ADMIN")
+                    .antMatchers("/turnos/**").hasAuthority("USER")
+                    .antMatchers("/odontologos/**", "/pacientes/**", "/turnos/**").hasAuthority("ADMIN")
                     .antMatchers("/index.html",
                             "/turnoAlta.html",
                             "/turnoList.html")
@@ -60,6 +78,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .permitAll()
                         .and()
                     .exceptionHandling().accessDeniedPage("/403.html");
+
     }
 
     @Override

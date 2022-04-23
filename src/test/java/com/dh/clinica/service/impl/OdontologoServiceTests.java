@@ -38,15 +38,15 @@ public class OdontologoServiceTests {
         odontologo = new OdontologoDto();
         odontologo.setNombre("Enzo");
         odontologo.setApellido("Perez");
-        odontologo.setMatricula(24242424);
+        odontologo.setMatricula(24242424L);
     }
 
     //@BeforeClass
     public /*static*/ void cargarDataSet() throws Exception {
         //this.odontologoService.guardar(new Odontologo("Santiago", "Paz", 3455647));
-        odontologoService.guardar(new OdontologoDto("Perez", "Enzo", 24242424));
-        odontologoService.guardar(new OdontologoDto("Alvarez", "Julian", 9999));
-        odontologoService.guardar(new OdontologoDto("Armani", "Franco", 1111));
+        odontologoService.guardar(new OdontologoDto("Perez", "Enzo", 24242424L));
+        odontologoService.guardar(new OdontologoDto("Alvarez", "Julian", 9999L));
+        odontologoService.guardar(new OdontologoDto("Armani", "Franco", 1111L));
     }
 
     @Test

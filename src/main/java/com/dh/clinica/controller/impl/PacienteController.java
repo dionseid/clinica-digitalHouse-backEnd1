@@ -25,7 +25,7 @@ public class PacienteController implements CrudController<PacienteDto> {
     @Autowired
     private PacienteService pacienteService;
 
-    @Override
+    //@Override
     @ApiOperation(value = "Crear un nueve paciente")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success | OK"),
@@ -38,7 +38,7 @@ public class PacienteController implements CrudController<PacienteDto> {
     }
 
     // Listar todes les pacientes
-    @Override
+    //@Override
     @ApiOperation(value = "Busca todes les pacientes")
     @ApiResponses(value = { @ApiResponse(code = 400, message = "Bad Request") })
     @GetMapping()
@@ -58,7 +58,7 @@ public class PacienteController implements CrudController<PacienteDto> {
         return response;
     }*/
 
-    @Override
+    //@Override
     @ApiOperation(value = "Actualiza un paciente")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success | OK"),
@@ -66,21 +66,21 @@ public class PacienteController implements CrudController<PacienteDto> {
             @ApiResponse(code = 404, message = "Not Found") })
     @PutMapping
     public ResponseEntity<?> actualizar(PacienteDto pacienteDto) throws BadRequestException, ResourceNotFoundException {
-        Long pacienteDtoId = pacienteDto.getId();
+        Integer pacienteDtoId = pacienteDto.getId();
 
         if (pacienteDtoId != null && pacienteService.buscar(pacienteDtoId) != null)
             return ResponseEntity.ok(pacienteService.actualizar(pacienteDto));
         else throw new ResourceNotFoundException("No existe ningún paciente con ID: " + pacienteDtoId);
     }
 
-    @Override
+    //@Override
     @ApiOperation(value = "Busca un paciente por ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success | OK"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 400, message = "Bad Request") })
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscar(@PathVariable Long id) throws BadRequestException, ResourceNotFoundException {
+    public ResponseEntity<?> buscar(@PathVariable Integer id) throws BadRequestException, ResourceNotFoundException {
         PacienteDto p = pacienteService.buscar(id);
         return ResponseEntity.ok(p);
     }
@@ -113,9 +113,8 @@ public class PacienteController implements CrudController<PacienteDto> {
             @ApiResponse(code = 400, message = "bad request"),
             @ApiResponse(code = 404, message = "not found") })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminar(@PathVariable Long id) throws BadRequestException, ResourceNotFoundException {
+    public ResponseEntity<String> eliminar(@PathVariable Integer id) throws BadRequestException, ResourceNotFoundException {
         pacienteService.eliminar(id);
         return ResponseEntity.ok("Se eliminó le paciente con ID: " + id);
     }
-
 }

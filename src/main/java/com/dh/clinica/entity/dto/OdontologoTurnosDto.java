@@ -8,7 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class OdontologoTurnosDto {
-    private Long id;
+    private Integer id;
     private Date fecha;
     private PacienteDto paciente;
 

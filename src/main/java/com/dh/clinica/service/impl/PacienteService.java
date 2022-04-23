@@ -41,7 +41,7 @@ public class PacienteService implements IPacienteService {
         if (pacienteDto.getDomicilio() == null)
             throw new BadRequestException("El domicilio es null");
         DomicilioDto domicilio = domicilioService.guardar(pacienteDto.getDomicilio());
-        Long domicilioId = domicilio.getId();
+        Integer domicilioId = domicilio.getId();
         //Long domicilioId = pacienteDto.getDomicilio().getId();
         if (domicilioService.buscar(domicilioId) != null) {
             Paciente paciente = Mapper.map(springConfig.getModelMapper(), pacienteDto, Paciente.class);
@@ -88,7 +88,7 @@ public class PacienteService implements IPacienteService {
     }*/
 
     @Override
-    public PacienteDto buscar(Long id) throws BadRequestException{
+    public PacienteDto buscar(Integer id) throws BadRequestException {
         if (id == null || id < 1)
             throw new BadRequestException("El ID del paciente no puede ser null ni negativo");
         Paciente p = pacienteRepository.findById(id).orElse(null);
@@ -98,7 +98,7 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public void eliminar(Long id) throws BadRequestException, ResourceNotFoundException {
+    public void eliminar(Integer id) throws BadRequestException, ResourceNotFoundException {
         if (id == null || id < 1) throw new BadRequestException("El ID del paciente no puede ser null ni negativo");
         if (!pacienteRepository.existsById(id)) throw new ResourceNotFoundException("No existe ningún paciente con ID: " + id);
         pacienteRepository.deleteById(id);

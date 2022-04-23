@@ -2,11 +2,16 @@ package com.dh.clinica.controller.impl;
 
 //import com.dh.clinica.repository.impl.OdontologoDaoH2;
 
+import com.dh.clinica.controller.CrudController;
+import com.dh.clinica.entity.Odontologo;
 import com.dh.clinica.entity.dto.OdontologoDto;
 import com.dh.clinica.entity.dto.OdontologoTurnosDto;
 import com.dh.clinica.exceptions.BadRequestException;
 import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.service.impl.OdontologoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,23 +22,25 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("odontologos")
-public class OdontologoController {
+public class OdontologoController implements CrudController<OdontologoDto> {
     @Autowired
     private OdontologoService odontologoService;
 
+    @Override
     @PostMapping()
-    public ResponseEntity<?/*OdontologoDto*/> guardar(@RequestBody OdontologoDto o) throws BadRequestException {
+    public ResponseEntity<?> guardar(@RequestBody OdontologoDto o) throws BadRequestException, ResourceNotFoundException {
         //return ResponseEntity.ok(odontologoService.guardar(o));
         odontologoService.guardar(o);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping
-    public Collection<OdontologoDto>/*ResponseEntity<Set*//*List<OdontologoDto/*Odontologo>>*/ listar() {
-        //return ResponseEntity.ok(odontologoService.listar());
-        return odontologoService.listar();
+    public ResponseEntity<?> listar() {
+        return ResponseEntity.ok(odontologoService.listar());
+        //return odontologoService.listar();
     }
 
+    @Override
     @PutMapping()
     public ResponseEntity<?/*OdontologoDto*//*Odontologo*/> actualizar(@RequestBody OdontologoDto/*Odontologo*/ o) throws BadRequestException, ResourceNotFoundException {
         ResponseEntity<?/*OdontologoDto*//*Odontologo*/> response = null;
@@ -46,16 +53,18 @@ public class OdontologoController {
         return response;
     }
 
+    @Override
     @GetMapping("id/{id}")
-    public OdontologoDto/*ResponseEntity<OdontologoDto/*Odontologo>*/ buscar(@PathVariable Long id) throws BadRequestException {
+    public ResponseEntity<?> buscar(@PathVariable Integer id) throws BadRequestException {
         OdontologoDto o = odontologoService.buscar(id)/*.orElse(null)*/;
 
         //return ResponseEntity.ok(o); // Me va a devolver status OK aunque la respuesta sea un objeto nulo
-        return o;
+        return ResponseEntity.ok(o);
     }
 
+    @Override
     @DeleteMapping("{id}")
-    public ResponseEntity<?/*String*/> eliminar(@PathVariable Long id) throws BadRequestException {
+    public ResponseEntity<String> eliminar(@PathVariable Integer id) throws BadRequestException {
         ResponseEntity<String> response = null;
 
         if (odontologoService.buscar(id) != null/*.isPresent()*/) {
@@ -69,7 +78,7 @@ public class OdontologoController {
     }
 
     @GetMapping("{id}/turnos")
-    public ResponseEntity<Set<OdontologoTurnosDto>> listarTurnos(@PathVariable Long id) {
+    public ResponseEntity<Set<OdontologoTurnosDto>> listarTurnos(@PathVariable Integer id) {
         return ResponseEntity.ok(odontologoService.listarTurnos(id));
     }
 

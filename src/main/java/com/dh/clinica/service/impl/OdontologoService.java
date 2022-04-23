@@ -10,6 +10,7 @@ import com.dh.clinica.entity.dto.PacienteDto;
 import com.dh.clinica.exceptions.BadRequestException;
 import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.repository.impl.OdontologoRepository;
+import com.dh.clinica.service.CrudService;
 import com.dh.clinica.util.Mapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class OdontologoService {
+public class OdontologoService implements CrudService<OdontologoDto> {
     /*@Autowired
     private OdontologoRepository odontologoRepository;
     @Autowired
@@ -37,7 +38,8 @@ public class OdontologoService {
         this.springConfig = springConfig;
     }
 
-    public OdontologoDto/*Odontologo*/ guardar(OdontologoDto/*Odontologo*/ odontologoDto) throws BadRequestException {
+    @Override
+    public OdontologoDto guardar(OdontologoDto odontologoDto) throws BadRequestException, ResourceNotFoundException {
         if (odontologoDto == null) throw new BadRequestException("El odontólogo no puede ser null");
         //Odontologo odontologo = mapper.convertValue(odontologoDto, Odontologo.class);
         Odontologo odontologo = springConfig.getModelMapper().map(odontologoDto, Odontologo.class);
@@ -50,6 +52,7 @@ public class OdontologoService {
         return odontologoDto;*/
     }
 
+    @Override
     public /*Set*/List<OdontologoDto/*Odontologo*/> listar() {
         /*List<Odontologo> odontologos = odontologoRepository.findAll();
         Set<OdontologoDto> odontologoDtos = new HashSet<>();
@@ -59,6 +62,7 @@ public class OdontologoService {
         return Mapper.mapList(springConfig.getModelMapper(), odontologos, OdontologoDto.class);
     }
 
+    @Override
     public OdontologoDto/*Odontologo*/ actualizar(OdontologoDto/*Odontologo*/ o) throws BadRequestException, ResourceNotFoundException { // Considerando esta implementación ¿No debería eliminar el odontólogo desactualizado?
         /*Odontologo odontologo = mapper.convertValue(o, Odontologo.class);
         odontologoRepository.save(odontologo);
@@ -78,21 +82,8 @@ public class OdontologoService {
         return odontologoActualizado;
     }
 
-    public void eliminar(Long id) {
-        odontologoRepository.deleteById(id);
-    }
-
-    public Set<OdontologoTurnosDto> listarTurnos(Long id) {
-        Odontologo o = odontologoRepository.findById(id).get();
-        Set<OdontologoTurnosDto> odontologoTurnosDto = new HashSet<>();
-        //for (Turno t: o.getTurnos()) odontologoTurnosDto.add(mapper.convertValue(t, OdontologoTurnosDto.class));
-        for (Turno t: o.getTurnos()) odontologoTurnosDto.add(springConfig.getModelMapper().map(t, OdontologoTurnosDto.class));
-        /*Mapper.mapList(springConfig.getModelMapper(), odontologos, OdontologoDto.class);
-        springConfig.getModelMapper().map(guardado, OdontologoDto.class);*/
-        return odontologoTurnosDto;
-    }
-
-    public OdontologoDto/*Optional<Odontologo>*//*Odontologo*/ buscar(Long id) throws BadRequestException {
+    @Override
+    public OdontologoDto/*Optional<Odontologo>*//*Odontologo*/ buscar(Integer id) throws BadRequestException {
         //return odontologoRepository.findById(id).get();
         // return odontologoRepository.findById(id);
         if (id == null || id < 1)
@@ -105,6 +96,11 @@ public class OdontologoService {
         //return mapper.convertValue(odontologoRepository.findById(id), OdontologoDto.class);
     }
 
+    @Override
+    public void eliminar(Integer id) {
+        odontologoRepository.deleteById(id);
+    }
+
     public Set<OdontologoDto>/*Odontologo*/ listarPorNombre(String apellido) {
         //return odontologoRepository.buscarPorNombre(apellido).get();
         Set<Odontologo> odontologos = odontologoRepository.listarPorNombre(apellido);
@@ -113,7 +109,7 @@ public class OdontologoService {
         return odontologoDtos;
     }
 
-    public Odontologo agregarTurno(Long id, Turno t) {
+    public Odontologo agregarTurno(Integer id, Turno t) {
         // Optional porque puede ser nulo
         Optional<Odontologo> o = odontologoRepository.findById(id);
         // Se asignó el odontólogo al turno, como es un Optional, usamos t.get() para tener un objeto Odontologo y no un objeto Optional<Odontologo>
@@ -121,5 +117,15 @@ public class OdontologoService {
         // Agregar, a la colección de turnos del odontólogo, al nuevo turno
         o.get().getTurnos().add(t);
         return odontologoRepository.save(o.get());
+    }
+
+    public Set<OdontologoTurnosDto> listarTurnos(Integer id) {
+        Odontologo o = odontologoRepository.findById(id).get();
+        Set<OdontologoTurnosDto> odontologoTurnosDto = new HashSet<>();
+        //for (Turno t: o.getTurnos()) odontologoTurnosDto.add(mapper.convertValue(t, OdontologoTurnosDto.class));
+        for (Turno t: o.getTurnos()) odontologoTurnosDto.add(springConfig.getModelMapper().map(t, OdontologoTurnosDto.class));
+        /*Mapper.mapList(springConfig.getModelMapper(), odontologos, OdontologoDto.class);
+        springConfig.getModelMapper().map(guardado, OdontologoDto.class);*/
+        return odontologoTurnosDto;
     }
 }

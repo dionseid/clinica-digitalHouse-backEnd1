@@ -82,16 +82,20 @@ public class Odontologo {
 
 @Entity
 @Table(name = "odontologos")
-@Getter @Setter
+@Getter
 public class Odontologo {
     @Id
     //@SequenceGenerator(name = "odontologo_sequence", sequenceName = "odontologo_sequence", allocationSize = 1)
     @GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "odontologo_sequence")
-    private Long id;
+    @Column(name = "odontologo_id")
+    private Integer id;
 
+    @Setter
     private String nombre;
+    @Setter
     private String apellido;
-    private Integer matricula;
+    @Setter
+    private Long matricula;
 
     @OneToMany(
             mappedBy = "odontologo",
@@ -99,26 +103,6 @@ public class Odontologo {
     )
     @JsonIgnore // Sin esta anotación obtengo el error java.lang.IllegalArgumentException: failed to lazily initialize a collection of role: com.dh.clinica.entity.Odontologo.turnos, could not initialize proxy - no Session (through reference chain: com.dh.clinica.entity.Odontologo["turnos"])
     private Set<Turno> turnos = new HashSet<>();
-
-    public Odontologo() {
-    }
-
-    public Odontologo(String apellido, String nombre, Integer matricula) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.matricula = matricula;
-    }
-
-    public Odontologo(Long id, String nombre, String apellido, Integer matricula) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.matricula = matricula;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     @Override
     public String toString() {

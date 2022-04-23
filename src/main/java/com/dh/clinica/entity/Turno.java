@@ -1,84 +1,46 @@
 package com.dh.clinica.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.Objects;
 
+@Getter
 @Entity
 @Table(name = "turnos")
 public class Turno {
     @Id
-    @SequenceGenerator(name = "turno_sequence", sequenceName = "turno_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "turno_sequence")
-    private Long id;
+    //@SequenceGenerator(name = "turno_sequence", sequenceName = "turno_sequence", allocationSize = 1)
+    @GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "turno_sequence")
+    private Integer id;
 
-    private Date fecha;
-    private LocalTime hora;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "paciente_id"/*, referencedColumnName = "id"*/)
+    @Setter
+    private LocalDateTime diaHora;
+
+    @Setter
+    @ManyToOne(fetch = FetchType./*LAZY*/EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "paciente_id"/*, referencedColumnName = "id"*/, nullable = false)
     private Paciente paciente;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "odontologo_id"/*, referencedColumnName = "id"*/)
+
+    @Setter
+    @ManyToOne(fetch = FetchType./*LAZY*/EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "odontologo_id"/*, referencedColumnName = "id"*/, nullable = false)
     private Odontologo odontologo;
 
-    public Turno() {
-    }
-
-    public Turno(Date fecha, LocalTime hora, Paciente paciente, Odontologo odontologo) {
-        this.fecha = fecha;
-        this.hora = hora;
-        this.paciente = paciente;
-        this.odontologo = odontologo;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    /*public void setId(Long id) {
-        this.id = id;
-    }*/
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
-    public Odontologo getOdontologo() {
-        return odontologo;
-    }
-
-    public void setOdontologo(Odontologo odontologo) {
-        this.odontologo = odontologo;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date date) {
-        this.fecha = date;
-    }
-
-    public LocalTime getHora() {
-        return hora;
-    }
-
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Turno turno = (Turno) o;
+        return Objects.equals(id, turno.id) && Objects.equals(diaHora, turno.diaHora) && Objects.equals(paciente, turno.paciente) && Objects.equals(odontologo, turno.odontologo);
     }
 
     @Override
-    public String toString() {
-        return "Turno{" +
-                "id=" + id +
-                ", fecha=" + fecha +
-                ", hora=" + hora +
-                ", paciente=" + paciente +
-                ", odontologo=" + odontologo +
-                '}';
+    public int hashCode() {
+        return Objects.hash(id, diaHora, paciente, odontologo);
     }
 }

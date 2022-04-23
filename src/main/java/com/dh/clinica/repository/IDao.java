@@ -6,8 +6,8 @@ import java.util.Optional;
 public interface IDao<T> {
 
      T guardar(T t);
-     T buscar(Long id);
-     void eliminar(Long id);
+     T buscar(Integer id);
+     void eliminar(Integer id);
      List<T> buscarTodos();
      T actualizar(T t);
 

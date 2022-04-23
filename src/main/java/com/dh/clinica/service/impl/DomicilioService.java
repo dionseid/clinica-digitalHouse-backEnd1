@@ -78,7 +78,7 @@ public class DomicilioService implements IDomicilioService {
     }
 
     @Override
-    public DomicilioDto buscar(Long id) throws ResourceNotFoundException, BadRequestException {
+    public DomicilioDto buscar(Integer id) throws ResourceNotFoundException, BadRequestException {
         //return domicilioRepository.findById(id).get();
         //return Optional.of(domicilioRepository.getById(id));
         //return domicilioRepository.findById(id);
@@ -90,7 +90,8 @@ public class DomicilioService implements IDomicilioService {
         return springConfig.getModelMapper().map(d, DomicilioDto.class);
     }
 
-    public void eliminar(Long id) {
+    @Override
+    public void eliminar(Integer id) {
         domicilioRepository.deleteById(id);
     }
 }

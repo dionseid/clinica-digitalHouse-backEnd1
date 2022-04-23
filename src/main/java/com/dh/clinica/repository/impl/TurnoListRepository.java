@@ -20,26 +20,6 @@ public class TurnoListRepository implements IDao<Turno> {
     }
 
     @Override
-    public Turno buscar(Long id) {
-        for(Turno turno : turnos){
-            if(turno.getId().equals(id)){
-                return turno;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void eliminar(Long id) {
-        for(Turno turno : turnos){
-            if(turno.getId().equals(id)){
-                turnos.remove(turno);
-                return;
-            }
-        }
-    }
-
-    @Override
     public List<Turno> buscarTodos() {
         return turnos;
     }
@@ -49,5 +29,25 @@ public class TurnoListRepository implements IDao<Turno> {
         eliminar(turno.getId());
         turnos.add(turno);
         return turno;
+    }
+
+    @Override
+    public Turno buscar(Integer id) {
+        for(Turno turno : turnos){
+            if(turno.getId().equals(id)){
+                return turno;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void eliminar(Integer id) {
+        for(Turno turno : turnos){
+            if(turno.getId().equals(id)){
+                turnos.remove(turno);
+                return;
+            }
+        }
     }
 }
