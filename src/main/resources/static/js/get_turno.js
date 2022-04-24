@@ -26,8 +26,8 @@ function cargarInformacionTurnos(turnos) {
             <tr id="${tr_id}">
                 <td>${get_More_Info_Btn}</td> 
                 <td class="td_diaHora">${turno.diaHora}</td>
-                <td class="td_paciente">${turno.paciente.nombre + " " + turno.paciente.apellido}</td>
-                <td class="td_odontologo">${turno.odontologo.nombre + " " + turno.odontologo.apellido}</td>
+                <td class="td_paciente">${turno.paciente.nombre.toUpperCase() + " " + turno.paciente.apellido.toUpperCase()}</td>
+                <td class="td_odontologo">${turno.odontologo.nombre.toUpperCase() + " " + turno.odontologo.apellido.toUpperCase()}</td>
                 <td>${deleteButton}</td> 
             </tr>
         `;

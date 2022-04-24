@@ -52,8 +52,8 @@ window.addEventListener('load', function () {
 
                 // Change the updated data for paciente table record
                 $("#tr_" + pacienteId + " td.td_id").text(paciente.id);
-                $("#tr_" + pacienteId + " td.td_nombre").text(paciente.nombre);
-                $("#tr_" + pacienteId + " td.td_apellido").text(paciente.apellido);
+                $("#tr_" + pacienteId + " td.td_nombre").text(paciente.nombre.toUpperCase());
+                $("#tr_" + pacienteId + " td.td_apellido").text(paciente.apellido.toUpperCase());
                 $("#tr_" + pacienteId + " td.td_dni").text(paciente.dni);
                 $("#tr_" + pacienteId + " td.td_email").text(paciente.email);
                 $("#tr_" + pacienteId + " td.td_fechaIngreso").text(paciente.fechaIngreso);

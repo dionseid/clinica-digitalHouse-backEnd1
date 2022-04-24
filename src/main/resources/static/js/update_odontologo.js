@@ -100,8 +100,8 @@ window.addEventListener('load', function () {
 
                 // Change the updated data for odontólogo table record
                 //$("#tr_" + odontologoId + " td.td_id").text(odontologo.id);
-                $("#tr_" + odontologoId + " td.td_nombre").text(odontologo.nombre);
-                $("#tr_" + odontologoId + " td.td_apellido").text(odontologo.apellido);
+                $("#tr_" + odontologoId + " td.td_nombre").text(odontologo.nombre.toUpperCase());
+                $("#tr_" + odontologoId + " td.td_apellido").text(odontologo.apellido.toUpperCase());
                 $("#tr_" + odontologoId + " td.td_matricula").text(odontologo.matricula);
             }).catch(error => {
                 console.log(error);

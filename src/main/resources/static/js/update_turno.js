@@ -47,8 +47,8 @@ window.addEventListener('load', function () {
                 // Change the updated data for turno table record
                 //$("#tr_" + turnoId + " td.td_id").text(turno.id);
                 $("#tr_" + turnoId + " td.td_diaHora").text(turno.diaHora);
-                $("#tr_" + turnoId + " td.td_paciente").text(turno.paciente.nombre + " " + turno.paciente.apellido);
-                $("#tr_" + turnoId + " td.td_odontologo").text(turno.odontologo.nombre + " " + turno.odontologo.apellido);
+                $("#tr_" + turnoId + " td.td_paciente").text(turno.paciente.nombre.toUpperCase() + " " + turno.paciente.apellido.toUpperCase());
+                $("#tr_" + turnoId + " td.td_odontologo").text(turno.odontologo.nombre.toUpperCase() + " " + turno.odontologo.apellido.toUpperCase());
             }).catch(error => {
                 console.log(error);
                 let errorAlert = '<div class="alert alert-danger alert-dismissible">' +
