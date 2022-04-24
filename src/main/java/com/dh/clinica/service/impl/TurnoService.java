@@ -12,9 +12,13 @@ import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.repository.impl.TurnoRepository;
 import com.dh.clinica.service.CrudService;
 import com.dh.clinica.util.Mapper;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -119,7 +123,9 @@ public class TurnoService implements CrudService<TurnoDto> {
 
     @Override
     public void eliminar(Integer id) throws BadRequestException, ResourceNotFoundException {
-
+        if (id == null || id < 1) throw new BadRequestException("El ID del turno no puede ser null ni negativo");
+        if (!turnoRepository.existsById(id)) throw new ResourceNotFoundException("No existe ningún turno con ID: " + id);
+        turnoRepository.deleteById(id);
     }
 
     /*public void eliminar(Long id) {

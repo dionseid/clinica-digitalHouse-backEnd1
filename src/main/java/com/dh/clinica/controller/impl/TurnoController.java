@@ -82,12 +82,19 @@ public class TurnoController implements CrudController<TurnoDto> {
         return ResponseEntity.ok(turnoABuscar);
     }
 
+    @Override
+    @ApiOperation(value = "Elimina un turno")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "success | OK"),
+            @ApiResponse(code = 400, message = "bad request"),
+            @ApiResponse(code = 404, message = "not found")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Integer id) throws BadRequestException, ResourceNotFoundException {
         ResponseEntity<String> response;
         if (turnoService.buscar(id) != null) { // Esta validacion no esta en el enunciado del ejericio, pero se las dejo para que la tengan
             turnoService.eliminar(id);
-            response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Eliminado");
+            response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("eliminado");
         } else {
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
