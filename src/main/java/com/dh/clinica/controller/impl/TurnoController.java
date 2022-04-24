@@ -57,14 +57,29 @@ public class TurnoController implements CrudController<TurnoDto> {
     }
 
     @Override
-    @PutMapping
-    public ResponseEntity<?> actualizar(@RequestBody TurnoDto t) throws BadRequestException, ResourceNotFoundException {
-        return ResponseEntity.ok(turnoService.actualizar(t));
+    @ApiOperation(value = "Actualiza un turno")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "success | OK"),
+            @ApiResponse(code = 400, message = "bad request"),
+            @ApiResponse(code = 404, message = "not found")
+    })
+    @PutMapping()
+    public ResponseEntity<?> actualizar(@RequestBody TurnoDto turnoDto) throws BadRequestException, ResourceNotFoundException {
+        TurnoDto actualizado = turnoService.actualizar(turnoDto);
+        return ResponseEntity.ok(actualizado);
     }
 
     @Override
-    public ResponseEntity<?> buscar(Integer id) throws BadRequestException, ResourceNotFoundException {
-        return null;
+    @ApiOperation(value = "Busca un turno por ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "success | OK"),
+            @ApiResponse(code = 400, message = "bad request"),
+            @ApiResponse(code = 404, message = "not found")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscar(@PathVariable Integer id) throws BadRequestException, ResourceNotFoundException {
+        TurnoDto turnoABuscar = turnoService.buscar(id);
+        return ResponseEntity.ok(turnoABuscar);
     }
 
     @DeleteMapping("/{id}")

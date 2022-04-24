@@ -9,8 +9,10 @@ window.addEventListener('load', function () {
             .then(response => response.json())
             .then(data => {
                 for (odontologo of data) {
-                    var selectElement2 = document.getElementById('odontologo');
-                    selectElement2.add(new Option(odontologo.nombre + " " + odontologo.apellido, odontologo.id));
+                    var selectElement = document.getElementById('odontologo');
+                    let optionElement = new Option(odontologo.nombre + " " + odontologo.apellido, odontologo.id);
+                    optionElement.setAttribute("id", `actualizarOdontologo${odontologo.id}`);
+                    selectElement.add(optionElement);
                 }
             })
 

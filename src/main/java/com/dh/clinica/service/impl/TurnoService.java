@@ -1,6 +1,8 @@
 package com.dh.clinica.service.impl;
 
 import com.dh.clinica.config.SpringConfig;
+import com.dh.clinica.entity.Odontologo;
+import com.dh.clinica.entity.Paciente;
 import com.dh.clinica.entity.Turno;
 import com.dh.clinica.entity.dto.OdontologoDto;
 import com.dh.clinica.entity.dto.PacienteDto;
@@ -10,6 +12,7 @@ import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.repository.impl.TurnoRepository;
 import com.dh.clinica.service.CrudService;
 import com.dh.clinica.util.Mapper;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,9 +73,32 @@ public class TurnoService implements CrudService<TurnoDto> {
         return Mapper.mapList(springConfig.getModelMapper(), turnosEntidades, TurnoDto.class);
     }
 
+    @SneakyThrows
     @Override
     public TurnoDto actualizar(TurnoDto turnoDto) throws BadRequestException, ResourceNotFoundException {
-        return null;
+        if (turnoDto == null) throw new BadRequestException("No se pudo actualizar el turno null");
+        if (turnoDto.getId() == null) throw new BadRequestException("El ID del turno a actualizar no puede ser null");
+        if (turnoDto.getPaciente() == null || turnoDto.getOdontologo() == null) throw new BadRequestException("Le paciente u odontólogo es null");
+        Turno turnoEnBd = turnoRepository.findById(turnoDto.getId()).get();
+
+        if (turnoEnBd != null) {
+            if (hayDisponibilidad(turnoDto)) {
+                if (turnoDto.getDiaHora() != null) turnoEnBd.setDiaHora(turnoDto.getDiaHora());
+                if (turnoDto.getPaciente() != null) {
+                    //pacienteService.actualizar(turnoDto.getPaciente());
+                    PacienteDto pacienteEnBd = pacienteService.buscar(turnoDto.getPaciente().getId());
+                    turnoEnBd.setPaciente(springConfig.getModelMapper().map(pacienteEnBd, Paciente.class));
+                }
+                if (turnoDto.getOdontologo() != null) {
+                    //odontologoService.actualizar(turnoDto.getOdontologo());
+                    OdontologoDto odontologoEnBd = odontologoService.buscar(turnoDto.getOdontologo().getId());
+                    turnoEnBd.setOdontologo(springConfig.getModelMapper().map(odontologoEnBd, Odontologo.class));
+                }
+                Turno turnoActualizado = turnoEnBd;
+                turnoDto = springConfig.getModelMapper().map(turnoRepository.save(turnoActualizado), TurnoDto.class);
+            } else throw new BadRequestException("El odontólogo ya tiene un turno programado para ese día en ese horario");
+        } else throw new ResourceNotFoundException("El odontólogo no existe");
+        return turnoDto;
     }
 
     /*public Turno actualizar(Turno t) {
@@ -81,7 +107,10 @@ public class TurnoService implements CrudService<TurnoDto> {
 
     @Override
     public TurnoDto buscar(Integer id) throws BadRequestException, ResourceNotFoundException {
-        return null;
+        if (id == null || id < 1) throw new BadRequestException("El ID del turno no puede ser null ni negativo");
+        Turno turnoEncontrado = turnoRepository.findById(id).orElse(null);
+        if (turnoEncontrado == null) throw new ResourceNotFoundException("No se encontró el turno con ID " + id);
+        return Mapper.map(springConfig.getModelMapper(), turnoEncontrado, TurnoDto.class);
     }
 
     /*public Optional<Turno>/*Turno*/ /*buscar(Long id) {

@@ -12,7 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/get_turno.js"></script>
-    <!--<script type="text/javascript" src="/js/update_turno.js"></script>-->
+    <script type="text/javascript" src="/js/get_turno_odontologo.js"></script>
+    <script type="text/javascript" src="/js/update_turno.js"></script>
     <!--<script type="text/javascript" src="/js/delete_turno.js"></script>-->
   </head>
   <body>
@@ -28,12 +29,11 @@
 
       <div id="div_turno_table">
         <h1>turnos</h1>
-        <div class="row col-md-6 table-responsive">
+        <div class="row col-md-12 table-responsive">
           <table id="turnoTable" class="table table-striped">
             <thead>
               <tr>
                 <th></th>
-                <th>ID</th>
                 <th>día y hora</th>
                 <th>paciente</th>
                 <th>odontólogo</th>
@@ -46,7 +46,7 @@
       </div>
       <div class="row">
         <div
-          class="col-sm-6"
+          class="col-sm-12"
           style="
             display: none;
             background-color: #e6fffa;
@@ -87,16 +87,19 @@
                 class="form-control"
                 placeholder="paciente"
                 id="paciente"
+                readonly
               />
             </div>
             <div class="form-group">
               <label class="control-label" for="odontologo">odontólogo:</label>
-              <input
+              <select
                 type="text"
                 class="form-control"
-                placeholder="odontólogo"
                 id="odontologo"
-              />
+                placeholder="Ingrese el odontólogo"
+                name="odontologo"
+                required
+              ></select>
             </div>
 
             <button type="submit" class="btn btn-primary">Modificar</button>

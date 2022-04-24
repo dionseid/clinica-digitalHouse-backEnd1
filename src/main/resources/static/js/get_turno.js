@@ -25,10 +25,9 @@ function cargarInformacionTurnos(turnos) {
         tablaTurnos.innerHTML += `
             <tr id="${tr_id}">
                 <td>${get_More_Info_Btn}</td> 
-                <td>${turno.id}</td>
-                <td>${turno.diaHora}</td>
-                <td>${turno.paciente.nombre + " " + turno.paciente.apellido}</td>
-                <td>${turno.odontologo.nombre + " " + turno.odontologo.apellido}</td>
+                <td class="td_diaHora">${turno.diaHora}</td>
+                <td class="td_paciente">${turno.paciente.nombre + " " + turno.paciente.apellido}</td>
+                <td class="td_odontologo">${turno.odontologo.nombre + " " + turno.odontologo.apellido}</td>
                 <td>${deleteButton}</td> 
             </tr>
         `;
