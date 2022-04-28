@@ -1,5 +1,6 @@
 package com.dh.clinica.persistance.entity.auth;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,47 +11,37 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
-@ToString
-@Getter
+@Data
 @Entity
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Long id;
 
-    @Setter
     private Integer dni;
-    @Setter
     private String username;
-    @Setter
     private String email;
-    @Setter
     private String password;
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    /*@Enumerated(EnumType.STRING)
+    private Role role;*/
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name="user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
-    public User() {
-    }
-
-    public User(Integer dni, String username, String email, String password, Role role) {
+    public User(Integer dni, String username, String email, String password, Set<Role> roles) {
         this.dni = dni;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.role = role;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
+        this.roles = roles;
     }
 
     @Override

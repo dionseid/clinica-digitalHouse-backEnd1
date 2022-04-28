@@ -9,6 +9,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
 public class DataLoader implements ApplicationRunner {
     private UserRepository userRepository;
@@ -23,7 +25,7 @@ public class DataLoader implements ApplicationRunner {
         String hashedPassword = passwordEncoder.encode("admin");
         BCryptPasswordEncoder passwordEncoder2 = new BCryptPasswordEncoder();
         String hashedPassword2 = passwordEncoder2.encode("user");
-        userRepository.save(new User(123456789, "admin", "admin@gmail.com", hashedPassword, Role.ADMIN/*Set.of(new Rol("ADMIN"), new Rol("USER"))*/));
-        userRepository.save(new User(123456789, "user", "user@gmail.com", hashedPassword2, Role.USER/*Set.of(new Rol("USER"))*/));
+        userRepository.save(new User(123456789, "admin", "admin@gmail.com", hashedPassword, /*Role.ADMIN*/Set.of(new Role("ADMIN"), new Role("USER"))));
+        userRepository.save(new User(123456789, "user", "user@gmail.com", hashedPassword2, /*Role.USER*/Set.of(new Role("USER"))));
     }
 }
