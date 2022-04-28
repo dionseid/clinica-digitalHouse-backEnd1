@@ -61,10 +61,6 @@ window.addEventListener('load', function () {
                 $("#tr_" + pacienteId + " td.td_localidad").text(paciente.domicilio.localidad);
                 $("#tr_" + pacienteId + " td.td_provincia").text(paciente.domicilio.provincia);
 
-                //$("#response").empty();
-                // $("#response").append(successAlert);
-                // $("#response").css({ "display": "block" });
-
             }).catch(error => {
                 let errorAlert = '<div class="alert alert-danger alert-dismissible">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +

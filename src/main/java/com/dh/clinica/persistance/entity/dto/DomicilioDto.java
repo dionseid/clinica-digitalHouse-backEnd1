@@ -1,6 +1,5 @@
-package com.dh.clinica.entity.dto;
+package com.dh.clinica.persistance.entity.dto;
 
-import com.dh.clinica.entity.Domicilio;
 import lombok.Data;
 
 @Data

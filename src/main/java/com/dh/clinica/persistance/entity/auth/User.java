@@ -1,7 +1,6 @@
-package com.dh.clinica.entity.auth;
+package com.dh.clinica.persistance.entity.auth;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,13 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 
 @ToString
 @Getter
-//@NoArgsConstructor
 @Entity
-public class Usuarie implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Long id;
@@ -33,18 +30,10 @@ public class Usuarie implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    /*@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "UsuarieRoles",
-            joinColumns = @JoinColumn(name = "id_usuario"), // No me toma "id_usuarie", me pregunto a qué hace referencia
-            inverseJoinColumns = @JoinColumn(name = "id_rol")
-    )
-    private Set<Rol> roles;*/
-
-    public Usuarie() {
+    public User() {
     }
 
-    public Usuarie(Integer dni, String username, String email, String password, Rol rol) {
+    public User(Integer dni, String username, String email, String password, Rol rol) {
         this.dni = dni;
         this.username = username;
         this.email = email;

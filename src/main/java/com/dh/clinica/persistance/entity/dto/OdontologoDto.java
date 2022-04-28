@@ -1,8 +1,6 @@
-package com.dh.clinica.entity.dto;
+package com.dh.clinica.persistance.entity.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class OdontologoDto {
@@ -14,7 +12,6 @@ public class OdontologoDto {
     public OdontologoDto() {
     }
 
-    // constructor para les tests
     public OdontologoDto(String apellido, String nombre, Long matricula) {
         this.apellido = apellido;
         this.nombre = nombre;

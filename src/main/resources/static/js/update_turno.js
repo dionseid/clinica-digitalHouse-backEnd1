@@ -45,7 +45,6 @@ window.addEventListener('load', function () {
                 resetUploadForm(turno);
 
                 // Change the updated data for turno table record
-                //$("#tr_" + turnoId + " td.td_id").text(turno.id);
                 $("#tr_" + turnoId + " td.td_diaHora").text(turno.diaHora);
                 $("#tr_" + turnoId + " td.td_paciente").text(turno.paciente.nombre.toUpperCase() + " " + turno.paciente.apellido.toUpperCase());
                 $("#tr_" + turnoId + " td.td_odontologo").text(turno.odontologo.nombre.toUpperCase() + " " + turno.odontologo.apellido.toUpperCase());
@@ -55,18 +54,10 @@ window.addEventListener('load', function () {
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                     '<strong> Error </strong></div>';
 
-                //$("#response").empty();
                 $("#response").append(errorAlert);
                 $("#response").css({ "display": "block" });
                 resetUploadForm();
-            })/*.finally(() => {
-                // Change the updated data for odontólogo table record
-                $("#tr_" + turnoId + " td.td_id").text(turnoData.id);
-                $("#tr_" + turnoId + " td.td_nombre").text(turnoData.nombre);
-                $("#tr_" + turnoId + " td.td_apellido").text(turnoData.apellido);
-                $("#tr_" + turnoId + " td.td_matricula").text(turnoData.matricula);
-                event.preventDefault()
-            })*/
+            })
 
     });
 
@@ -93,7 +84,6 @@ function find(id) {
             $("#dia").val(turno.diaHora.substring(0, 10));
             $("#hora").val(turno.diaHora.substring(11));
             $("#paciente").val(turno.paciente.nombre + " " + turno.paciente.apellido);
-            // $("#odontologo > option").val(turno.odontologo.nombre + " " + turno.odontologo.apellido);
             document.querySelector(`#actualizarOdontologo${turno.odontologo.id}`).setAttribute("selected", "");
             $("#div_turno_updating").css({ "display": "block" });
         }).catch(error => {

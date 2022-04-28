@@ -1,4 +1,4 @@
-package com.dh.clinica.entity.dto;
+package com.dh.clinica.persistance.entity.dto;
 
 import lombok.Data;
 

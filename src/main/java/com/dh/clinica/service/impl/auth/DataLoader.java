@@ -1,37 +1,29 @@
 package com.dh.clinica.service.impl.auth;
 
-import com.dh.clinica.entity.auth.Rol;
-import com.dh.clinica.entity.auth.Usuarie;
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.repository.auth.UsuarieRepository;
+import com.dh.clinica.persistance.entity.auth.Rol;
+import com.dh.clinica.persistance.entity.auth.User;
+import com.dh.clinica.persistance.repository.auth.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-
-import java.util.Set;
 
 @Component
 public class DataLoader implements ApplicationRunner {
-    private /*final*/ UsuarieRepository/*Service*/ usuarieRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public DataLoader(UsuarieRepository usuarieRepository) {
-        this.usuarieRepository = usuarieRepository;
+    public DataLoader(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public void run(ApplicationArguments args) /*throws BadRequestException*/ {
+    public void run(ApplicationArguments args) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode("admin");
         BCryptPasswordEncoder passwordEncoder2 = new BCryptPasswordEncoder();
         String hashedPassword2 = passwordEncoder2.encode("user");
-        usuarieRepository.save(new Usuarie(123456789, "admin", "admin@gmail.com", hashedPassword, Rol.ADMIN/*Set.of(new Rol("ADMIN"), new Rol("USER"))*/));
-        usuarieRepository.save(new Usuarie(123456789, "user", "user@gmail.com", hashedPassword2, Rol.USER/*Set.of(new Rol("USER"))*/));
+        userRepository.save(new User(123456789, "admin", "admin@gmail.com", hashedPassword, Rol.ADMIN/*Set.of(new Rol("ADMIN"), new Rol("USER"))*/));
+        userRepository.save(new User(123456789, "user", "user@gmail.com", hashedPassword2, Rol.USER/*Set.of(new Rol("USER"))*/));
     }
 }

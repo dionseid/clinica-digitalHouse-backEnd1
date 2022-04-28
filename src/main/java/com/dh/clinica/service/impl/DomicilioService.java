@@ -2,11 +2,11 @@ package com.dh.clinica.service.impl;
 
 
 import com.dh.clinica.config.SpringConfig;
-import com.dh.clinica.entity.Domicilio;
-import com.dh.clinica.entity.dto.DomicilioDto;
+import com.dh.clinica.persistance.entity.Domicilio;
+import com.dh.clinica.persistance.entity.dto.DomicilioDto;
 import com.dh.clinica.exceptions.BadRequestException;
 import com.dh.clinica.exceptions.ResourceNotFoundException;
-import com.dh.clinica.repository.impl.DomicilioRepository;
+import com.dh.clinica.persistance.repository.impl.DomicilioRepository;
 import com.dh.clinica.service.IDomicilioService;
 import com.dh.clinica.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,8 @@ import java.util.Optional;
 
 @Service
 public class DomicilioService implements IDomicilioService {
-    /*@Autowired
-    private DomicilioRepository domicilioRepository;*/
 
-    private final DomicilioRepository domicilioRepository; // Está bien que no podamos cambiar a posteriori la implementación del servicio?
+    private final DomicilioRepository domicilioRepository;
     private final SpringConfig springConfig;
 
     @Autowired
@@ -29,10 +27,6 @@ public class DomicilioService implements IDomicilioService {
         this.domicilioRepository = domicilioRepository;
         this.springConfig = springConfig;
     }
-
-    /*public Domicilio guardar(Domicilio d) {
-        return domicilioRepository.save(d);
-    }*/
 
     @Override
     public DomicilioDto guardar(DomicilioDto domicilioDto) throws BadRequestException {
@@ -79,9 +73,6 @@ public class DomicilioService implements IDomicilioService {
 
     @Override
     public DomicilioDto buscar(Integer id) throws ResourceNotFoundException, BadRequestException {
-        //return domicilioRepository.findById(id).get();
-        //return Optional.of(domicilioRepository.getById(id));
-        //return domicilioRepository.findById(id);
         if (id == null || id < 1)
             throw new BadRequestException("El ID del domicilio no puede ser null ni negativo");
         Domicilio d = domicilioRepository.findById(id).orElse(null);

@@ -1,4 +1,4 @@
-package com.dh.clinica.entity;
+package com.dh.clinica.persistance.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -85,8 +85,7 @@ public class Odontologo {
 @Getter
 public class Odontologo {
     @Id
-    //@SequenceGenerator(name = "odontologo_sequence", sequenceName = "odontologo_sequence", allocationSize = 1)
-    @GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "odontologo_sequence")
+    @GeneratedValue
     @Column(name = "odontologo_id")
     private Integer id;
 
@@ -101,7 +100,7 @@ public class Odontologo {
             mappedBy = "odontologo",
             fetch = FetchType.LAZY
     )
-    @JsonIgnore // Sin esta anotación obtengo el error java.lang.IllegalArgumentException: failed to lazily initialize a collection of role: com.dh.clinica.entity.Odontologo.turnos, could not initialize proxy - no Session (through reference chain: com.dh.clinica.entity.Odontologo["turnos"])
+    @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
 
     @Override

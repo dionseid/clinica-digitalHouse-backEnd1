@@ -1,28 +1,22 @@
 package com.dh.clinica.service.impl;
 
-
 import com.dh.clinica.config.SpringConfig;
-import com.dh.clinica.entity.Domicilio;
-import com.dh.clinica.entity.Paciente;
-import com.dh.clinica.entity.dto.DomicilioDto;
-import com.dh.clinica.entity.dto.PacienteDto;
+import com.dh.clinica.persistance.entity.Domicilio;
+import com.dh.clinica.persistance.entity.Paciente;
+import com.dh.clinica.persistance.entity.dto.DomicilioDto;
+import com.dh.clinica.persistance.entity.dto.PacienteDto;
 import com.dh.clinica.exceptions.BadRequestException;
 import com.dh.clinica.exceptions.ResourceNotFoundException;
-import com.dh.clinica.repository.impl.DomicilioRepository;
-import com.dh.clinica.repository.impl.PacienteRepository;
+import com.dh.clinica.persistance.repository.impl.PacienteRepository;
 import com.dh.clinica.service.IPacienteService;
 import com.dh.clinica.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PacienteService implements IPacienteService {
-    /*@Autowired
-    private PacienteRepository pacienteRepository;*/
 
     private final PacienteRepository pacienteRepository;
     private final DomicilioService domicilioService;
@@ -37,12 +31,10 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public PacienteDto guardar(PacienteDto pacienteDto) throws BadRequestException, ResourceNotFoundException {
-        //if (pacienteDto == null) throw new BadRequestException("No se puede crear un paciente null");
         if (pacienteDto.getDomicilio() == null)
             throw new BadRequestException("El domicilio es null");
         DomicilioDto domicilio = domicilioService.guardar(pacienteDto.getDomicilio());
         Integer domicilioId = domicilio.getId();
-        //Long domicilioId = pacienteDto.getDomicilio().getId();
         if (domicilioService.buscar(domicilioId) != null) {
             Paciente paciente = Mapper.map(springConfig.getModelMapper(), pacienteDto, Paciente.class);
             pacienteDto = Mapper.map(springConfig.getModelMapper(), pacienteRepository.save(paciente), PacienteDto.class);
@@ -50,8 +42,6 @@ public class PacienteService implements IPacienteService {
         } else
             throw new BadRequestException("No se pudo cargar el domicilio");
         return pacienteDto;
-        //Paciente p = springConfig.getModelMapper().map(pacienteDto, Paciente.class);
-        //return springConfig.getModelMapper().map(pacienteRepository.save(p), PacienteDto.class);
     }
 
     @Override
@@ -82,10 +72,6 @@ public class PacienteService implements IPacienteService {
         } else throw new ResourceNotFoundException("Le paciente no existe");
         return pacienteDto;
     }
-
-    /*public Paciente actualizar(Paciente p) {
-        return pacienteRepository.save(p);
-    }*/
 
     @Override
     public PacienteDto buscar(Integer id) throws BadRequestException {

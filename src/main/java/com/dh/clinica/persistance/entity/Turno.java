@@ -1,12 +1,10 @@
-package com.dh.clinica.entity;
+package com.dh.clinica.persistance.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -14,21 +12,20 @@ import java.util.Objects;
 @Table(name = "turnos")
 public class Turno {
     @Id
-    //@SequenceGenerator(name = "turno_sequence", sequenceName = "turno_sequence", allocationSize = 1)
-    @GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "turno_sequence")
+    @GeneratedValue
     private Integer id;
 
     @Setter
     private LocalDateTime diaHora;
 
     @Setter
-    @ManyToOne(fetch = FetchType./*LAZY*/EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "paciente_id"/*, referencedColumnName = "id"*/, nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;
 
     @Setter
-    @ManyToOne(fetch = FetchType./*LAZY*/EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "odontologo_id"/*, referencedColumnName = "id"*/, nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "odontologo_id", nullable = false)
     private Odontologo odontologo;
 
     @Override

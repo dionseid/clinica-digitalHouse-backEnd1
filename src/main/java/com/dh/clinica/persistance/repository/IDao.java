@@ -1,7 +1,6 @@
-package com.dh.clinica.repository;
+package com.dh.clinica.persistance.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IDao<T> {
 

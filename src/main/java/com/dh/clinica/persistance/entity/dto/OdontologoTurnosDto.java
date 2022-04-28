@@ -1,4 +1,4 @@
-package com.dh.clinica.entity.dto;
+package com.dh.clinica.persistance.entity.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,6 @@ public class OdontologoTurnosDto {
     private Date fecha;
     private PacienteDto paciente;
 
-    // constructor para les tests
     public OdontologoTurnosDto(Date fecha, PacienteDto paciente) {
         this.fecha = fecha;
         this.paciente = paciente;

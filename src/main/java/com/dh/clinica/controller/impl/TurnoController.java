@@ -1,8 +1,7 @@
 package com.dh.clinica.controller.impl;
 
 import com.dh.clinica.controller.CrudController;
-import com.dh.clinica.entity.Turno;
-import com.dh.clinica.entity.dto.TurnoDto;
+import com.dh.clinica.persistance.entity.dto.TurnoDto;
 import com.dh.clinica.exceptions.BadRequestException;
 import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.service.impl.OdontologoService;
@@ -35,15 +34,6 @@ public class TurnoController implements CrudController<TurnoDto> {
             @ApiResponse(code = 400, message = "bad request") })
     @PostMapping()
     public ResponseEntity<?> guardar(@RequestBody TurnoDto turno) throws BadRequestException, ResourceNotFoundException {
-        //ResponseEntity<Turno> response;
-        //if (pacienteService.buscar(turno.getPaciente().getId()) != null/*.isPresent()*/ && odontologoService.buscar(turno.getOdontologo().getId()) != null/*.isPresent()*/) //{
-            //response = ResponseEntity.ok(turnoService.guardar(turno));
-            //odontologoService.agregarTurno(t.getPaciente().getId(), t);
-        /*}*/ //else
-            //response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-
-        //return response;
-
         TurnoDto turnoGuardado = turnoService.guardar(turno);
         return ResponseEntity.ok(turnoGuardado);
     }
@@ -92,7 +82,7 @@ public class TurnoController implements CrudController<TurnoDto> {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Integer id) throws BadRequestException, ResourceNotFoundException {
         ResponseEntity<String> response;
-        if (turnoService.buscar(id) != null) { // Esta validacion no esta en el enunciado del ejericio, pero se las dejo para que la tengan
+        if (turnoService.buscar(id) != null) {
             turnoService.eliminar(id);
             response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("eliminado");
         } else {
@@ -100,31 +90,4 @@ public class TurnoController implements CrudController<TurnoDto> {
         }
         return response;
     }
-
-    /*@GetMapping("/turnoAlta")
-    public String welcome(Model model) {
-        model.addAttribute("nombre", "Juan Perez 2");
-        model.addAttribute("apellido", "Garcia");
-        model.addAttribute("turnos", turnoService.listar());
-        return "turnoAlta";
-    }
-
-    /*@RequestMapping(value="/developer/{id}/skills", method=RequestMethod.POST)
-    public String developersAddSkill(@PathVariable Long id, @RequestParam Long skillId, Model model) {
-        Skill skill = skillRepository.findOne(skillId);
-        Developer developer = repository.findOne(id);
-
-        if (developer != null) {
-            if (!developer.hasSkill(skill)) {
-                developer.getSkills().add(skill);
-            }
-            repository.save(developer);
-            model.addAttribute("developer", repository.findOne(id));
-            model.addAttribute("turnos", turnoService.listar());
-            return "redirect:/developer/" + developer.getId();
-        }
-
-        model.addAttribute("developers", repository.findAll());
-        return "redirect:/developers";
-    }*/
 }

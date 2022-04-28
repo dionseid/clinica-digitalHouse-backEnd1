@@ -1,4 +1,4 @@
-package com.dh.clinica.entity;
+package com.dh.clinica.persistance.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,8 +17,7 @@ import java.util.Set;
 @Table(name = "pacientes")
 public class Paciente {
     @Id
-    //@SequenceGenerator(name = "paciente_sequence", sequenceName = "paciente_sequence", allocationSize = 1)
-    @GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "paciente_sequence")
+    @GeneratedValue
     @Column(name = "paciente_id")
     private Integer id;
 
@@ -36,7 +34,7 @@ public class Paciente {
 
     @Setter
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "domicilio_id"/*, referencedColumnName = "id"*/, nullable = false)
+    @JoinColumn(name = "domicilio_id", nullable = false)
     private Domicilio domicilio;
     @Setter
     @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)

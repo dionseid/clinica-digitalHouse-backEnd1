@@ -1,6 +1,6 @@
-package com.dh.clinica.repository.impl;
+package com.dh.clinica.persistance.repository.impl;
 
-import com.dh.clinica.entity.Turno;
+import com.dh.clinica.persistance.entity.Turno;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TurnoRepository extends JpaRepository<Turno, Integer> {
