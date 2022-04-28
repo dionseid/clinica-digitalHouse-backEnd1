@@ -28,17 +28,17 @@ public class User implements UserDetails {
     @Setter
     private String password;
     @Enumerated(EnumType.STRING)
-    private Rol rol;
+    private Role role;
 
     public User() {
     }
 
-    public User(Integer dni, String username, String email, String password, Rol rol) {
+    public User(Integer dni, String username, String email, String password, Role role) {
         this.dni = dni;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.rol = rol;
+        this.role = role;
     }
 
     public String getEmail() {
@@ -55,7 +55,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(rol.name());
+        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.name());
 
         return Collections.singletonList(grantedAuthority);
     }

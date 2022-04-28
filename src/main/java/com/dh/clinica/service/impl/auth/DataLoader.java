@@ -1,6 +1,6 @@
 package com.dh.clinica.service.impl.auth;
 
-import com.dh.clinica.persistance.entity.auth.Rol;
+import com.dh.clinica.persistance.entity.auth.Role;
 import com.dh.clinica.persistance.entity.auth.User;
 import com.dh.clinica.persistance.repository.auth.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class DataLoader implements ApplicationRunner {
         String hashedPassword = passwordEncoder.encode("admin");
         BCryptPasswordEncoder passwordEncoder2 = new BCryptPasswordEncoder();
         String hashedPassword2 = passwordEncoder2.encode("user");
-        userRepository.save(new User(123456789, "admin", "admin@gmail.com", hashedPassword, Rol.ADMIN/*Set.of(new Rol("ADMIN"), new Rol("USER"))*/));
-        userRepository.save(new User(123456789, "user", "user@gmail.com", hashedPassword2, Rol.USER/*Set.of(new Rol("USER"))*/));
+        userRepository.save(new User(123456789, "admin", "admin@gmail.com", hashedPassword, Role.ADMIN/*Set.of(new Rol("ADMIN"), new Rol("USER"))*/));
+        userRepository.save(new User(123456789, "user", "user@gmail.com", hashedPassword2, Role.USER/*Set.of(new Rol("USER"))*/));
     }
 }

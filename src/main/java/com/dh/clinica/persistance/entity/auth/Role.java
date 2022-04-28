@@ -1,5 +1,5 @@
 package com.dh.clinica.persistance.entity.auth;
 
-public enum Rol {
+public enum Role {
     USER,ADMIN
 }
