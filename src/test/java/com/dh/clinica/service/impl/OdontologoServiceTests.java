@@ -16,11 +16,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-//@RunWith(SpringJUnit4ClassRunner/*JUnit4*//*SpringRunner*/.class)
+/*@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest
 public class OdontologoServiceTests {
-    //private static OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2());
     @Autowired
     private OdontologoService odontologoService;
     private OdontologoDto odontologo;
@@ -33,9 +31,7 @@ public class OdontologoServiceTests {
         odontologo.setMatricula(24242424L);
     }
 
-    //@BeforeClass
-    public /*static*/ void cargarDataSet() throws Exception {
-        //this.odontologoService.guardar(new Odontologo("Santiago", "Paz", 3455647));
+    public void cargarDataSet() throws Exception {
         odontologoService.guardar(new OdontologoDto("Perez", "Enzo", 24242424L));
         odontologoService.guardar(new OdontologoDto("Alvarez", "Julian", 9999L));
         odontologoService.guardar(new OdontologoDto("Armani", "Franco", 1111L));
@@ -43,22 +39,20 @@ public class OdontologoServiceTests {
 
     @Test
     public void guardar() throws Exception {
-        OdontologoDto/*Odontologo*/ odontologoGuardado = odontologoService.guardar(/*new OdontologoDto/*Odontologo*//*("Ramirez", "Juan", 348971960)*/odontologo);
+        OdontologoDto odontologoGuardado = odontologoService.guardar(odontologo);
         Assert.assertTrue(odontologoGuardado.getId() != null);
     }
 
     @Test
     public void listar() throws Exception {
         cargarDataSet();
-        /*Set*/List<OdontologoDto/*Odontologo*/> odontologos = odontologoService.listar();
+        List<OdontologoDto> odontologos = odontologoService.listar();
         Assert.assertTrue(!odontologos.isEmpty());
-        Assert.assertTrue(odontologos.size() > 0/* == 1*/);
-        //System.out.println(odontologos);
+        Assert.assertTrue(odontologos.size() > 0);
     }
 
     @Test
     public void buscar() throws ResourceNotFoundException, BadRequestException {
-        //this.setUp();
         OdontologoDto odontologoABuscar = odontologoService.guardar(odontologo);
         OdontologoDto odontologoEncontrado = odontologoService.buscar(odontologoABuscar.getId());
         Assert.assertTrue(odontologoEncontrado != null);
@@ -66,25 +60,10 @@ public class OdontologoServiceTests {
 
     @Test
     public void eliminar() throws Exception {
-        /*this.cargarDataSet();
-        odontologoService.eliminar(1L);
-        Assert.assertTrue(odontologoService.buscar(1L) == null);/*.isEmpty()*///);*/
-
-        /*boolean thrown = true;
-        OdontologoDto o = odontologoService.guardar(new OdontologoDto("Quinteros", "Juanfer", 10101010));
-        odontologoService.eliminar(o.getId());
-        try {
-            odontologoService.buscar(o.getId());
-        } catch (NoSuchElementException e) {
-            thrown = false;
-        }
-        assertFalse(thrown);*/
-
-        //this.setUp();
         OdontologoDto odontologoGuardado = odontologoService.guardar(odontologo);
         assertNotNull(odontologoService.buscar(odontologoGuardado.getId()));
         odontologoService.eliminar(odontologoGuardado.getId());
-        assertThrows(com.dh.clinica.exceptions.BadRequestException.class/*org.hibernate.LazyInitializationException.class*//*ConfigDataResourceNotFoundException.class*/, () -> odontologoService.buscar(odontologoGuardado.getId()));
+        assertThrows(com.dh.clinica.exceptions.BadRequestException.class, () -> odontologoService.buscar(odontologoGuardado.getId()));
     }
 
     @Test
@@ -93,4 +72,4 @@ public class OdontologoServiceTests {
         assertNotNull(odontologoService.listarPorNombre("Armani"));
         assertNotNull(odontologoService.listarPorNombre("Alvarez"));
     }
-}
+}*/

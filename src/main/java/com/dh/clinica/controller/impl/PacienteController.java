@@ -4,22 +4,27 @@ import com.dh.clinica.controller.CrudController;
 import com.dh.clinica.persistance.entity.dto.PacienteDto;
 import com.dh.clinica.exceptions.BadRequestException;
 import com.dh.clinica.exceptions.ResourceNotFoundException;
+import com.dh.clinica.service.impl.DomicilioService;
 import com.dh.clinica.service.impl.PacienteService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.ApiOperation;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@PreAuthorize("hasAuthority('ADMIN')")
 @RestController
 @RequestMapping("/pacientes")
 public class PacienteController implements CrudController<PacienteDto> {
     @Autowired
     private PacienteService pacienteService;
+    @Autowired
+    private DomicilioService domicilioService;
 
     @Override
     @ApiOperation(value = "Crear un nueve paciente")

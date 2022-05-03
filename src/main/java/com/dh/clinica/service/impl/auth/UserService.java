@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service
-public class UsuarieService implements UserDetailsService {
+/*@Service
+public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsuarieService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -36,15 +36,4 @@ public class UsuarieService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow((() -> new UsernameNotFoundException("user not found")));
     }*/
-
-    @Override
-    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-        User user = userRepository.findByUsernameOrMail(usernameOrEmail, usernameOrEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("user not found"));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), true, true, true, true, /*mapRoles(user.getRole())*/ user.getAuthorities());
-    }
-    /* implementación de AlPetrovich:
-    private Collection<? extends GrantedAuthority> mapRoles(Set<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }*/
-}
+//}

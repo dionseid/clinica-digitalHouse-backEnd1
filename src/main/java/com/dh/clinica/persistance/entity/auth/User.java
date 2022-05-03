@@ -1,33 +1,32 @@
 package com.dh.clinica.persistance.entity.auth;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+@NoArgsConstructor
+public class User {
     @Id
     @GeneratedValue
     private Long id;
 
     private Integer dni;
     private String username;
-    private String email;
+    private String mail;
     private String password;
     /*@Enumerated(EnumType.STRING)
     private Role role;*/
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="user_roles",
@@ -35,39 +34,27 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "rol_id")
     )
     private Set<Role> roles = new HashSet<>();
+    public void addRole(Role role){
+        this.roles.add(role);
+    }
 
-    public User(Integer dni, String username, String email, String password, Set<Role> roles) {
+    public User(Integer dni, String username, String mail, String password, Set<Role> roles) {
         this.dni = dni;
         this.username = username;
-        this.email = email;
+        this.mail = mail;
         this.password = password;
         this.roles = roles;
     }
 
-    @Override
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.name());
-
-        return Collections.singletonList(grantedAuthority);
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
+        //SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.name());
+        Collection<SimpleGrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        //return Collections.singletonList(grantedAuthority);
+        return authorities;
     }
 }

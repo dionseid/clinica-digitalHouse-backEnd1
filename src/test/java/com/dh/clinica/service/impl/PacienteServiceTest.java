@@ -12,25 +12,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-//@RunWith(/*JUnit4*/SpringRunner.class)
+/*@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest
 public class PacienteServiceTest {
-    /*private static PacienteService pacienteService = new PacienteService(new PacienteDaoH2());
-    private DomicilioService domicilioService = new DomicilioService(new DomicilioDaoH2());*/
     @Autowired
     private PacienteService pacienteService;
     private PacienteDto paciente;
 
-    //@BeforeClass
     @BeforeEach
-    public /*static*/ void setUp() {
+    public void setUp() {
         DomicilioDto d = new DomicilioDto("Av Santa fe", 444, "CABA", "Buenos Aires");
         paciente = new PacienteDto("Santiago", "Paz", 88888888, "santiagopaz@gmail.com", d);
-        //Paciente p = pacienteService.guardar(new Paciente("Santiago", "Paz", "santiagopaz@gmail.com", 88888888, new Date(), d));
-        //Domicilio d1 = new Domicilio("Av Avellaneda", "333", "CABA", "Buenos Aires");
-        //Paciente p1 = pacienteService.guardar(new Paciente("Micaela", "Perez", "micaelaperez@gmail.com", 99999999, new Date(), d1));
     }
 
     @Test
@@ -41,10 +33,6 @@ public class PacienteServiceTest {
 
     @Test
     public void listar() throws Exception {
-        //List<Paciente> pacientes = pacienteService.listar();
-        //Assert.assertTrue(!pacientes.isEmpty());
-        //Assert.assertTrue(pacientes.size() /*> 0*///== 2);
-        //System.out.println(pacientes);
         pacienteService.guardar(paciente);
         assertNotEquals(0, pacienteService.listar().size());
     }
@@ -57,23 +45,4 @@ public class PacienteServiceTest {
         PacienteDto actualizade = pacienteService.actualizar(p);
         assertNotEquals(actualizade, original);
     }
-
-    //@Test
-    //public void eliminar() throws Exception {
-        //pacienteService.eliminar(3L);
-        //Assert.assertTrue(pacienteService.buscar(3L)/* == null*///.isEmpty());
-        /*PacienteDto p = pacienteService.guardar(paciente);
-        assertNotNull(pacienteService.buscar(p.getId()));
-        pacienteService.eliminar(p.getId());
-        assertThrows(ResourceNotFoundException.class, () -> pacienteService.buscar(p.getId()));
-    }*/
-
-    //@Test
-    //public void agregarYBuscarPacienteTest() {
-        //this.cargarDataSet();
-        //Domicilio d = new Domicilio("Calle", "123", "Temperley", "Buenos Aires");
-        //Paciente p = pacienteService.guardar(new Paciente("Tomas", "Pereyra", "tomaspereyra@gmail.com", 12345678, new Date(), d));
-
-        //Assert.assertNotNull(pacienteService.buscar(p.getId()));
-    //}
-}
+}*/

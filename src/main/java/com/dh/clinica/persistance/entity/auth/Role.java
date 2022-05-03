@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor
-public /*enum*/ class Role {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
