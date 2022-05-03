@@ -1,25 +1,16 @@
 package com.dh.clinica.service.impl.auth;
 
-import com.dh.clinica.entity.auth.Rol;
 import com.dh.clinica.entity.auth.Usuarie;
-import com.dh.clinica.exceptions.BadRequestException;
 //import com.dh.clinica.repository.auth.RolRepository;
 import com.dh.clinica.repository.auth.UsuarieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UsuarieService implements UserDetailsService {

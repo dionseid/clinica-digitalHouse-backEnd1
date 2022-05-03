@@ -23,6 +23,6 @@ public class Rol {
     }
 }*/
 
-public enum Rol {
+public enum Roles {
     USER,ADMIN
 }

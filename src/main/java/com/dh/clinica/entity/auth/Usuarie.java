@@ -1,7 +1,6 @@
 package com.dh.clinica.entity.auth;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,9 +8,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @ToString
 @Getter
@@ -30,9 +32,14 @@ public class Usuarie implements UserDetails {
     private String email;
     @Setter
     private String password;
-    @Enumerated(EnumType.STRING)
-    private Rol rol;
 
+    /*@Enumerated(EnumType.STRING)
+    private Roles rol;*/
+    @ElementCollection
+    private List<String> roles = new ArrayList<>();
+    public void addRole(Roles role){
+        this.roles.add(role.toString());
+    }
     /*@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "UsuarieRoles",
@@ -44,12 +51,18 @@ public class Usuarie implements UserDetails {
     public Usuarie() {
     }
 
-    public Usuarie(Integer dni, String username, String email, String password, Rol rol) {
+    public Usuarie(Integer dni, String username, String email, String password, List<Roles> roles) {
         this.dni = dni;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.rol = rol;
+        //this.rol = rol;
+        this.roles = Stream.of(roles.toString()).collect(Collectors.toList());
+    }
+
+    public Usuarie(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public String getEmail() {
@@ -66,9 +79,12 @@ public class Usuarie implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(rol.name());
+        //SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(rol.name());
 
-        return Collections.singletonList(grantedAuthority);
+        //return Collections.singletonList(grantedAuthority);
+
+        Collection<SimpleGrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).collect(Collectors.toList());
+        return authorities;
     }
 
     @Override
