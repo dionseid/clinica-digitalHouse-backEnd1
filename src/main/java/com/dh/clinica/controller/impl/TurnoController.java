@@ -38,6 +38,9 @@ public class TurnoController implements CrudController<TurnoDto> {
         return ResponseEntity.ok(turnoGuardado);
     }
 
+    /*@PostMapping('/{idPaciente}/{idOdontologo}')
+    public ResponseEntity<Turno>*/
+
     @Override
     @ApiOperation(value = "Busca todos los turnos")
     @ApiResponses(value = { @ApiResponse(code = 400, message = "bad request") })

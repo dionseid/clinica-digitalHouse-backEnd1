@@ -9,6 +9,7 @@ import com.dh.clinica.exceptions.BadRequestException;
 import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.persistance.repository.impl.OdontologoRepository;
 import com.dh.clinica.service.CrudService;
+import com.dh.clinica.service.IOdontologoService;
 import com.dh.clinica.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class OdontologoService implements CrudService<OdontologoDto> {
+public class OdontologoService implements IOdontologoService {
     private final OdontologoRepository odontologoRepository;
     private final SpringConfig springConfig;
 
@@ -86,8 +87,9 @@ public class OdontologoService implements CrudService<OdontologoDto> {
         return odontologoDtos;
     }
 
-    public Odontologo agregarTurno(Integer id, Turno t) {
-        Optional<Odontologo> o = odontologoRepository.findById(id);
+    @Override
+    public Odontologo agregarTurno(Integer idOdontologo, Turno t) {
+        Optional<Odontologo> o = odontologoRepository.findById(idOdontologo);
         t.setOdontologo(o.get());
         o.get().getTurnos().add(t);
         return odontologoRepository.save(o.get());

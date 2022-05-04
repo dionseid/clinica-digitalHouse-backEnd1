@@ -11,6 +11,7 @@ import com.dh.clinica.exceptions.BadRequestException;
 import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.persistance.repository.impl.TurnoRepository;
 import com.dh.clinica.service.CrudService;
+import com.dh.clinica.service.IOdontologoService;
 import com.dh.clinica.util.Mapper;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import java.util.List;
 @Service
 public class TurnoService implements CrudService<TurnoDto> {
     @Autowired
-    private CrudService<OdontologoDto> odontologoService;
+    private IOdontologoService odontologoService;
     @Autowired
     private CrudService<PacienteDto> pacienteService;
     private final TurnoRepository turnoRepository;
@@ -43,6 +44,7 @@ public class TurnoService implements CrudService<TurnoDto> {
         if (pacienteEnBd != null && odontologoEnBd != null) {
             if (this.hayDisponibilidad(turnoSolicitado)) {
                 Turno turnoAGuardar = Mapper.map(springConfig.getModelMapper(), turnoSolicitado, Turno.class);
+                odontologoService.agregarTurno(odontologoId, turnoAGuardar);
                 turnoSolicitado = Mapper.map(springConfig.getModelMapper(), turnoRepository.save(turnoAGuardar), TurnoDto.class);
                 turnoSolicitado.setPaciente(pacienteService.buscar(pacienteId));
                 turnoSolicitado.setOdontologo(odontologoService.buscar(odontologoId));
