@@ -1,10 +1,9 @@
 package com.dh.clinica.controller.impl;
 
 import com.dh.clinica.controller.CrudController;
-import com.dh.clinica.entity.Turno;
-import com.dh.clinica.entity.dto.TurnoDto;
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
+import com.dh.clinica.model.dto.TurnoDto;
+import com.dh.clinica.util.exceptions.BadRequestException;
+import com.dh.clinica.util.exceptions.ResourceNotFoundException;
 import com.dh.clinica.service.impl.OdontologoService;
 import com.dh.clinica.service.impl.PacienteService;
 import com.dh.clinica.service.impl.TurnoService;

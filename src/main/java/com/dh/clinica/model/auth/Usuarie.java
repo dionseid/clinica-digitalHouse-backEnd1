@@ -1,24 +1,17 @@
-package com.dh.clinica.entity.auth;
+package com.dh.clinica.model.auth;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@ToString
-@Getter
-//@NoArgsConstructor
 @Entity
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Usuarie implements UserDetails {
     @Id
     @GeneratedValue
@@ -27,6 +20,7 @@ public class Usuarie implements UserDetails {
     @Setter
     private Integer dni;
     @Setter
+    @Column(unique = true)
     private String username;
     @Setter
     private String email;
@@ -35,11 +29,15 @@ public class Usuarie implements UserDetails {
 
     /*@Enumerated(EnumType.STRING)
     private Roles rol;*/
-    @ElementCollection
+    /*@ElementCollection
     private List<String> roles = new ArrayList<>();
     public void addRole(Roles role){
         this.roles.add(role.toString());
-    }
+    }*/
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Roles> roles;
+
     /*@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "UsuarieRoles",
@@ -48,16 +46,13 @@ public class Usuarie implements UserDetails {
     )
     private Set<Rol> roles;*/
 
-    public Usuarie() {
-    }
-
     public Usuarie(Integer dni, String username, String email, String password, List<Roles> roles) {
         this.dni = dni;
         this.username = username;
         this.email = email;
         this.password = password;
         //this.rol = rol;
-        this.roles = Stream.of(roles.toString()).collect(Collectors.toList());
+        this.roles = Stream.of(roles.toString()).collect(Collectors.toSet());
     }
 
     public Usuarie(String username, String password) {
@@ -65,26 +60,12 @@ public class Usuarie implements UserDetails {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(rol.name());
-
-        //return Collections.singletonList(grantedAuthority);
-
-        Collection<SimpleGrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).collect(Collectors.toList());
-        return authorities;
+        return roles
+                .stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+                .collect(Collectors.toList());
     }
 
     @Override

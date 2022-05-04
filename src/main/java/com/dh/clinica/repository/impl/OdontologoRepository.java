@@ -1,11 +1,10 @@
 package com.dh.clinica.repository.impl;
 
-import com.dh.clinica.entity.Odontologo;
+import com.dh.clinica.model.Odontologo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
 import java.util.Set;
 
 public interface OdontologoRepository extends JpaRepository<Odontologo, Integer> { // Por defecto toma ID como Long, por más que lo setee como Integer

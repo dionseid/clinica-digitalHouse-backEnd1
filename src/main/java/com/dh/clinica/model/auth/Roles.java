@@ -1,4 +1,4 @@
-package com.dh.clinica.entity.auth;
+package com.dh.clinica.model.auth;
 
 /*import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,18 +1,15 @@
 package com.dh.clinica.service.impl;
 
-import com.dh.clinica.config.SpringConfig;
-import com.dh.clinica.entity.Paciente;
-import com.dh.clinica.entity.Turno;
-import com.dh.clinica.entity.Odontologo;
-import com.dh.clinica.entity.dto.OdontologoDto;
-import com.dh.clinica.entity.dto.OdontologoTurnosDto;
-import com.dh.clinica.entity.dto.PacienteDto;
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
+import com.dh.clinica.util.SpringConfig;
+import com.dh.clinica.model.Turno;
+import com.dh.clinica.model.Odontologo;
+import com.dh.clinica.model.dto.OdontologoDto;
+import com.dh.clinica.model.dto.OdontologoTurnosDto;
+import com.dh.clinica.util.exceptions.BadRequestException;
+import com.dh.clinica.util.exceptions.ResourceNotFoundException;
 import com.dh.clinica.repository.impl.OdontologoRepository;
 import com.dh.clinica.service.CrudService;
 import com.dh.clinica.util.Mapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

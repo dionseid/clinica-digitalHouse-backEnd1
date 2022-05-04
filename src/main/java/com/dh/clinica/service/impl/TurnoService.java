@@ -1,27 +1,22 @@
 package com.dh.clinica.service.impl;
 
-import com.dh.clinica.config.SpringConfig;
-import com.dh.clinica.entity.Odontologo;
-import com.dh.clinica.entity.Paciente;
-import com.dh.clinica.entity.Turno;
-import com.dh.clinica.entity.dto.OdontologoDto;
-import com.dh.clinica.entity.dto.PacienteDto;
-import com.dh.clinica.entity.dto.TurnoDto;
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
+import com.dh.clinica.util.SpringConfig;
+import com.dh.clinica.model.Odontologo;
+import com.dh.clinica.model.Paciente;
+import com.dh.clinica.model.Turno;
+import com.dh.clinica.model.dto.OdontologoDto;
+import com.dh.clinica.model.dto.PacienteDto;
+import com.dh.clinica.model.dto.TurnoDto;
+import com.dh.clinica.util.exceptions.BadRequestException;
+import com.dh.clinica.util.exceptions.ResourceNotFoundException;
 import com.dh.clinica.repository.impl.TurnoRepository;
 import com.dh.clinica.service.CrudService;
 import com.dh.clinica.util.Mapper;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TurnoService implements CrudService<TurnoDto> {

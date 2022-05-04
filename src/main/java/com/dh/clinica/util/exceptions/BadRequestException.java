@@ -1,4 +1,4 @@
-package com.dh.clinica.exceptions;
+package com.dh.clinica.util.exceptions;
 
 public class BadRequestException extends Exception {
     public BadRequestException(String message) {

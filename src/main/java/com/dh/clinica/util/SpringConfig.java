@@ -1,4 +1,4 @@
-package com.dh.clinica.config;
+package com.dh.clinica.util;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.NamingConventions;

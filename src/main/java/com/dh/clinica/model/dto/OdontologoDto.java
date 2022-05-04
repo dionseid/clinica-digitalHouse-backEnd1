@@ -1,8 +1,6 @@
-package com.dh.clinica.entity.dto;
+package com.dh.clinica.model.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class OdontologoDto {

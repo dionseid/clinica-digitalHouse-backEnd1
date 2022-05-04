@@ -1,4 +1,4 @@
-package com.dh.clinica.config;
+package com.dh.clinica.service.config;
 
 import com.dh.clinica.service.impl.auth.UsuarieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,23 +6,36 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private /*final*/ UsuarieService usuarieService;
-    @Autowired
-    private /*final*/ BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public void configure(WebSecurity web) {
+        web.ignoring().anyRequest();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+
+    //@Autowired
+    //private /*final*/ UsuarieService usuarieService;
+    //@Autowired
+    //private /*final*/ BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    //@Override
+    //protected void configure(HttpSecurity http) throws Exception {
         /*http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/odontologos/**", "/pacientes/**")
@@ -51,33 +64,36 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().formLogin()
                 .and().logout();*/
 
-        http.csrf()
-                .disable()
-                .authorizeRequests()
-                    //.antMatchers("/odontologos/", "/pacientes/**", "/turnos/**").hasAuthority("USER")
-                    //.antMatchers("/odontologos/**", "/pacientes/**", "/turnos/**").hasAuthority("ADMIN")
-                    /*.antMatchers("/index.html",
-                            "/turnoAlta.html",
-                            "/turnoList.html")
-                        .hasAuthority("USER")*/
-                    .antMatchers(//"/index.html",
-                            "/odontologoAlta.html",
-                            "/pacienteAlta.html",
-                            //"/turnoAlta.html",
-                            //"/usuarieAlta.html",
-                            "/odontologoList.html",
-                            "/pacienteList.html"
-                            //"/usuarieList.html",
-                            /*"/turnoList.html"*/)
-                        .hasAuthority("ADMIN")
-                    .anyRequest().authenticated()
-                    .and().formLogin()
-                        .permitAll()
-                    .and().logout()
-                        .logoutSuccessUrl("/login")
-                        .permitAll()
-                        .and()
-                    .exceptionHandling().accessDeniedPage("/403.html");
+        //http.csrf()
+                //.disable()
+                //.authorizeRequests()
+                //.antMatchers("/odontologos/", "/pacientes/**", "/turnos/**").hasAuthority("USER")
+                //.antMatchers("/odontologos/**", "/pacientes/**", "/turnos/**").hasAuthority("ADMIN")
+                /*.antMatchers("/index.html",
+                        "/turnoAlta.html",
+                        "/turnoList.html")
+                    .hasAuthority("USER")*/
+                /*.antMatchers(//"/index.html",
+                        "/odontologoAlta.html",
+                        "/pacienteAlta.html",
+                        //"/turnoAlta.html",
+                        //"/usuarieAlta.html",
+                        "/odontologoList.html",
+                        "/pacienteList.html"
+                        //"/usuarieList.html",
+                        /*"/turnoList.html"*//*)
+                .hasAnyAuthority("ADMIN")
+                .anyRequest().authenticated()
+                .and().formLogin()
+                .permitAll()
+                .and().logout()
+                .logoutSuccessUrl("/login")
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/403.html");
+
+
+
 
     }
 

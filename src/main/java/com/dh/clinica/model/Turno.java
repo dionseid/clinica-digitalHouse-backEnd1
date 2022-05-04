@@ -1,12 +1,10 @@
-package com.dh.clinica.entity;
+package com.dh.clinica.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.Objects;
 
 @Getter

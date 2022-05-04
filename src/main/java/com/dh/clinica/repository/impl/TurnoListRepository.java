@@ -1,7 +1,7 @@
 package com.dh.clinica.repository.impl;
 
 import com.dh.clinica.repository.IDao;
-import com.dh.clinica.entity.Turno;
+import com.dh.clinica.model.Turno;
 
 import java.util.ArrayList;
 import java.util.List;

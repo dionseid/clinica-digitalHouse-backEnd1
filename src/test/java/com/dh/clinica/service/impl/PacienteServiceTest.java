@@ -1,24 +1,14 @@
 package com.dh.clinica.service.impl;
 
-import com.dh.clinica.entity.Domicilio;
-import com.dh.clinica.entity.Paciente;
-import com.dh.clinica.entity.dto.DomicilioDto;
-import com.dh.clinica.entity.dto.PacienteDto;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
-import com.dh.clinica.service.impl.PacienteService;
+import com.dh.clinica.model.dto.DomicilioDto;
+import com.dh.clinica.model.dto.PacienteDto;
 
-import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Date;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

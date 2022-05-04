@@ -1,7 +1,7 @@
 package com.dh.clinica.service;
 
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
+import com.dh.clinica.util.exceptions.BadRequestException;
+import com.dh.clinica.util.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

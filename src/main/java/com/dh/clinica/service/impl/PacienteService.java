@@ -1,23 +1,20 @@
 package com.dh.clinica.service.impl;
 
 
-import com.dh.clinica.config.SpringConfig;
-import com.dh.clinica.entity.Domicilio;
-import com.dh.clinica.entity.Paciente;
-import com.dh.clinica.entity.dto.DomicilioDto;
-import com.dh.clinica.entity.dto.PacienteDto;
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
-import com.dh.clinica.repository.impl.DomicilioRepository;
+import com.dh.clinica.util.SpringConfig;
+import com.dh.clinica.model.Domicilio;
+import com.dh.clinica.model.Paciente;
+import com.dh.clinica.model.dto.DomicilioDto;
+import com.dh.clinica.model.dto.PacienteDto;
+import com.dh.clinica.util.exceptions.BadRequestException;
+import com.dh.clinica.util.exceptions.ResourceNotFoundException;
 import com.dh.clinica.repository.impl.PacienteRepository;
 import com.dh.clinica.service.IPacienteService;
 import com.dh.clinica.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PacienteService implements IPacienteService {

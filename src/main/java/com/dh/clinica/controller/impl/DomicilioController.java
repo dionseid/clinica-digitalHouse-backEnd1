@@ -1,9 +1,9 @@
 package com.dh.clinica.controller.impl;
 
 import com.dh.clinica.controller.CrudController;
-import com.dh.clinica.entity.dto.DomicilioDto;
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
+import com.dh.clinica.model.dto.DomicilioDto;
+import com.dh.clinica.util.exceptions.BadRequestException;
+import com.dh.clinica.util.exceptions.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

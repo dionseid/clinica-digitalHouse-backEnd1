@@ -3,21 +3,16 @@ package com.dh.clinica.controller.impl;
 //import com.dh.clinica.repository.impl.OdontologoDaoH2;
 
 import com.dh.clinica.controller.CrudController;
-import com.dh.clinica.entity.Odontologo;
-import com.dh.clinica.entity.dto.OdontologoDto;
-import com.dh.clinica.entity.dto.OdontologoTurnosDto;
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
+import com.dh.clinica.model.dto.OdontologoDto;
+import com.dh.clinica.model.dto.OdontologoTurnosDto;
+import com.dh.clinica.util.exceptions.BadRequestException;
+import com.dh.clinica.util.exceptions.ResourceNotFoundException;
 import com.dh.clinica.service.impl.OdontologoService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.Set;
 
 @RestController

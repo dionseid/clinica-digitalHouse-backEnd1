@@ -1,11 +1,11 @@
 package com.dh.clinica.service.impl;
 
 
-import com.dh.clinica.config.SpringConfig;
-import com.dh.clinica.entity.Domicilio;
-import com.dh.clinica.entity.dto.DomicilioDto;
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
+import com.dh.clinica.util.SpringConfig;
+import com.dh.clinica.model.Domicilio;
+import com.dh.clinica.model.dto.DomicilioDto;
+import com.dh.clinica.util.exceptions.BadRequestException;
+import com.dh.clinica.util.exceptions.ResourceNotFoundException;
 import com.dh.clinica.repository.impl.DomicilioRepository;
 import com.dh.clinica.service.IDomicilioService;
 import com.dh.clinica.util.Mapper;

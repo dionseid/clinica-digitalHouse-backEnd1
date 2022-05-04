@@ -1,4 +1,4 @@
-package com.dh.clinica.entity;
+package com.dh.clinica.model;
 
 import lombok.Getter;
 import lombok.Setter;

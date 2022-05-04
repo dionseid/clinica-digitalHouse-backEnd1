@@ -1,26 +1,18 @@
 package com.dh.clinica.service.impl;
 
-import com.dh.clinica.entity.dto.OdontologoDto;
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
-import com.dh.clinica.service.impl.OdontologoService;
+import com.dh.clinica.model.dto.OdontologoDto;
+import com.dh.clinica.util.exceptions.BadRequestException;
+import com.dh.clinica.util.exceptions.ResourceNotFoundException;
 
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -92,7 +84,7 @@ public class OdontologoServiceTests {
         OdontologoDto odontologoGuardado = odontologoService.guardar(odontologo);
         assertNotNull(odontologoService.buscar(odontologoGuardado.getId()));
         odontologoService.eliminar(odontologoGuardado.getId());
-        assertThrows(com.dh.clinica.exceptions.BadRequestException.class/*org.hibernate.LazyInitializationException.class*//*ConfigDataResourceNotFoundException.class*/, () -> odontologoService.buscar(odontologoGuardado.getId()));
+        assertThrows(com.dh.clinica.util.exceptions.BadRequestException.class/*org.hibernate.LazyInitializationException.class*//*ConfigDataResourceNotFoundException.class*/, () -> odontologoService.buscar(odontologoGuardado.getId()));
     }
 
     @Test

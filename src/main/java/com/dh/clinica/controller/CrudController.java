@@ -2,8 +2,8 @@ package com.dh.clinica.controller;
 
 /*import com.valva.proyectointegrador.exceptions.BadRequestException;
 import com.valva.proyectointegrador.exceptions.ResourceNotFoundException;*/
-import com.dh.clinica.exceptions.BadRequestException;
-import com.dh.clinica.exceptions.ResourceNotFoundException;
+import com.dh.clinica.util.exceptions.BadRequestException;
+import com.dh.clinica.util.exceptions.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

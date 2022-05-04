@@ -1,4 +1,4 @@
-package com.dh.clinica.exceptions;
+package com.dh.clinica.util.exceptions;
 
 public class ResourceNotFoundException extends Exception {
     public ResourceNotFoundException(String message) {
