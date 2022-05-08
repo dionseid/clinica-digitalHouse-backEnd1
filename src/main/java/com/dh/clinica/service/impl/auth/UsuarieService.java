@@ -3,11 +3,15 @@ package com.dh.clinica.service.impl.auth;
 import com.dh.clinica.model.auth.Roles;
 import com.dh.clinica.model.auth.Usuarie;
 //import com.dh.clinica.repository.auth.RolRepository;
+import com.dh.clinica.model.dto.user.CreateUserDto;
 import com.dh.clinica.repository.auth.UsuarieRepository;
 import com.dh.clinica.service.BaseService;
+import com.dh.clinica.util.exceptions.NewUserWithDifferentPasswordsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -34,11 +39,20 @@ public class UsuarieService extends BaseService<Usuarie, Long, UsuarieRepository
         return this.repositorio.findByUsername(username);
     }
 
-    public Usuarie crear(Usuarie usuarie) {
-        usuarie.setPassword(passwordEncoder.encode(usuarie.getPassword()));
-        usuarie.setRoles(Set.of(Roles.USER));
-        // usuarie.setRoles(Stream.of(Roles.USER).collect(Collectors.toSet())); Java 8 implementation
-        return guardar(usuarie);
+    public Usuarie guardar(CreateUserDto newUsuarie) {
+        if (newUsuarie.getPassword().contentEquals(newUsuarie.getPassword2())) {
+            Usuarie usuarie = Usuarie.builder()
+                    .username(newUsuarie.getUsername())
+                    .password(passwordEncoder.encode(newUsuarie.getPassword()))
+                    .roles(Stream.of(Roles.USER).collect(Collectors.toSet()))
+                    .build();
+
+            try {
+                return guardar(usuarie);
+            } catch (DataIntegrityViolationException ex) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre de usuarie ya existe");
+            }
+        } else throw new NewUserWithDifferentPasswordsException();
     }
 
 

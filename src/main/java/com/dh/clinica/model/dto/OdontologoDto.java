@@ -12,7 +12,6 @@ public class OdontologoDto {
     public OdontologoDto() {
     }
 
-    // constructor para les tests
     public OdontologoDto(String apellido, String nombre, Long matricula) {
         this.apellido = apellido;
         this.nombre = nombre;

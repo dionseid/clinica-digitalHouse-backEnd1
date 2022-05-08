@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
+@Builder
 public class Usuarie implements UserDetails {
     @Id
     @GeneratedValue
@@ -46,13 +47,13 @@ public class Usuarie implements UserDetails {
     )
     private Set<Rol> roles;*/
 
-    public Usuarie(Integer dni, String username, String email, String password, List<Roles> roles) {
+    public Usuarie(Integer dni, String username, String email, String password, Set<Roles> roles) {
         this.dni = dni;
         this.username = username;
         this.email = email;
         this.password = password;
         //this.rol = rol;
-        this.roles = Stream.of(roles.toString()).collect(Collectors.toSet());
+        this.roles = roles;
     }
 
     public Usuarie(String username, String password) {
